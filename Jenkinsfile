@@ -1,38 +1,23 @@
-jobs:
-  - script: >
-      job('testJob1') {
-          agent any
-          triggers { pollSCM }
-          stages {
-            stage('Source checkout') {
-                steps {
-                    checkout(
-                    [
-                        $class: 'GitSCM',
-                        branches: [],
-                        browser: [],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [],
-                        submoduleCfg: [],
-                        userRemoteConfigs: [
-                            [
-                                url: 'https://github.com/georgievalexandro/learning-devops'
-                            ]
-                        ]
-                    ]
-                )
-                stash 'source'
-            }
-        }
-        stage('OS-specific binaries') {
-            steps {
-                shell('echo Hello Jenkins World!')
-            }
-        }
+pipeline {
+  agent {
+    node {
+      label any
+    }
+  }
 
-  - script: >
-      job('testJob2') {
-          steps {
-              shell('echo Hello Jenkins World!')
-          }
+  triggers {
+    pollSCM('*/2 * * * *')
+  }
+
+  stages {
+    stage('checkout') {
+      steps {
+        checkout scm: [$class: 'GitSCM',
+          userRemoteConfigs: [[url: 'https://github.com/georgievalexandro/learning-devops.git',
+                              credentialsId: '928429e8-5c06-4b6e-9f83-7a02081edc5e']],
+                              branches: [[name: 'refs/heads/master']]
+        ], poll: true
       }
+    }
+  }
+}
