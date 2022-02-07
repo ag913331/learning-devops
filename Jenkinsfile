@@ -1,19 +1,37 @@
 jobs:
   - script: >
       job('testJob1') {
-          triggers {
-              scm('H/15 * * * *')
-          }
-          steps {
-              shell('echo Hello World!')
-          }
-      }
+          agent any
+          triggers { pollSCM }
+          stages {
+            stage('Source checkout') {
+                steps {
+                    checkout(
+                    [
+                        $class: 'GitSCM',
+                        branches: [],
+                        browser: [],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [
+                            [
+                                url: 'https://github.com/georgievalexandro/learning-devops'
+                            ]
+                        ]
+                    ]
+                )
+                stash 'source'
+            }
+        }
+        stage('OS-specific binaries') {
+            steps {
+                shell('echo Hello Jenkins World!')
+            }
+        }
 
   - script: >
       job('testJob2') {
-          triggers {
-              scm('H/15 * * * *')
-          }
           steps {
               shell('echo Hello Jenkins World!')
           }
