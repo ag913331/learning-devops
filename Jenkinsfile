@@ -1,6 +1,10 @@
 pipeline {
   agent any 
 
+  environment {
+    GITHUB_REPO_CREDS = credentials('Jenkins')
+  }
+
   triggers {
     pollSCM('H/15 * * * *')
   }
@@ -11,7 +15,7 @@ pipeline {
         echo "I am about to checkout this repo"
         checkout scm: [$class: 'GitSCM',
           userRemoteConfigs: [[url: 'https://github.com/georgievalexandro/learning-devops.git',
-                              credentialsId: '928429e8-5c06-4b6e-9f83-7a02081edc5e']],
+                              credentialsId: 'GITHUB_REPO_CREDS']],
                               branches: [[name: 'refs/heads/master']]
         ], poll: true
       }
