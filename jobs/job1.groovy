@@ -8,7 +8,7 @@ job("Job1"){
         gitHubPushTrigger()   
     }
     steps {
-        shell ("printf Hello DSL")
+        echo "Hello DSL"
     }
 }buildPipelineView('project-A') {
     title('Project A CI Pipeline')
