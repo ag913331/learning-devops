@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWorkspace()
 def config = new JsonSlurper().parseText(new File("${workspace}/config.json").text)
 
-pipelineJob("CHECKOUT") {
+job("CHECKOUT") {
     agent any 
 
 	triggers {
