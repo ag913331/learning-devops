@@ -6,8 +6,11 @@ def config = new JsonSlurper().parseText(new File("${workspace}/github.json").te
 
 config["repos"].eachWithIndex { repo, index -> 
     job("DSL_JOB_${index}") {
+        scm {
+            github('${config["from"]}/repo', 'master')
+        }
         steps {
-            shell ("print ${repo}")
+            shell ("Checking ---> ${repo}")
         }
     }
 }
