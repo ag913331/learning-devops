@@ -4,9 +4,8 @@ hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWo
 def config = new JsonSlurper().parseText(new File("${workspace}/config.json").text)
 // def content = readFileFromWorkspace("seedA", "config.json")
 
-config["repos"].eachWithIndex { repo, index -> 
-    job("DSL_JOB_${index}") {
-        concurrentBuild()
+job("CHECKOUT") {
+    config["repos"].eachWithIndex { repo, index -> 
         scm {
             github(config["from"] + repo["name"], repo["branch"])
         }
