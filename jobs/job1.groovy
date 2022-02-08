@@ -11,7 +11,7 @@ config["repos"].eachWithIndex { repo, index ->
             github(config["from"] + repo["name"], repo["branch"])
         }
         steps {
-            shell ("Checking --->")
+            shell ("echo Checking")
         }
     }
 }
