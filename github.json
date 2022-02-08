@@ -1,7 +1,7 @@
 {
     "from": "https://github.com/georgievalexandro/",
     "repos": [
-        "learning-devops.git",
-        "nda.git"
+        "learning-devops",
+        "nda"
     ]
 }
