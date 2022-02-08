@@ -6,6 +6,6 @@ job('example') {
         githubPush()
     }
     steps {
-        echo "Hello Jenkins"
+        shell("Hello Jenkins")
     }
 }
