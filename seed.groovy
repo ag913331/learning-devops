@@ -8,8 +8,6 @@ job('seed') {
         }
     }
     steps {
-        dsl {
-            external('jobs/job1.groovy')
-        }
+        shell("Hello")
     }
 }
