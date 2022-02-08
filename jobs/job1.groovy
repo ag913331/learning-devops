@@ -1,19 +1,11 @@
-job("Job1"){
-    description("First job")
-    label('dynamic')
+job('example') {
     scm {
         github('https://github.com/georgievalexandro/learning-devops.git', 'master')
     }
     triggers {
-        gitHubPushTrigger()   
+        githubPush()
     }
     steps {
-        echo "Hello DSL"
+        echo "Hello Jenkins"
     }
-}buildPipelineView('project-A') {
-    title('Project A CI Pipeline')
-    displayedBuilds(5)
-    selectedJob('Job1')
-    showPipelineParameters()
-    refreshFrequency(60)
 }
