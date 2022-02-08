@@ -1,5 +1,8 @@
-// def repos = ["https://github.com/georgievalexandro/learning-devops.git", "https://github.com/georgievalexandro/nda.git"]
-def content = readFileFromWorkspace("seedA", "github.txt")
+import groovy.json.JsonSlurper
+
+hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWorkspace()
+def config = new JsonSlurper().parseText(new File("${workspace}/github.json").text)
+// def content = readFileFromWorkspace("seedA", "github.json")
 
 for(i in 0..2) {
     job("Repo${i}") {
@@ -7,7 +10,7 @@ for(i in 0..2) {
         //     git(repos[i])
         // }
         steps {
-            shell("printf ${content}")
+            shell("printf ${config}")
         }
     }
 }
