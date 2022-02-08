@@ -3,21 +3,28 @@ import groovy.json.JsonSlurper
 hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWorkspace()
 def config = new JsonSlurper().parseText(new File("${workspace}/config.json").text)
 
-pipelineJob('CHECKOUT2') {
+pipelineJob('PJ') {
   definition {
     cps {
       script('''
         pipeline {
             agent any
             stages {
-                stage('Stage 1') {
-                    steps {
-                        echo 'logic'
+                stage('Checkout stage') {
+                    ${config["repos"]}.eachWithIndex { repo, index -> 
+                        steps {
+                            echo '${repo["name"]}'
+                        }
                     }
                 }
-                stage('Stage 2') {
+                stage('Build') {
                     steps {
-                        echo 'logic'
+                        echo 'Building'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        echo 'Testing'
                     }
                 }
             }
