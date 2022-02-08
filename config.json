@@ -1,7 +1,7 @@
 {
     "from": "georgievalexandro/",
     "repos": [
-        "learning-devops",
-        "nda"
+        { "name": "learning-devops", "branch": "master" },
+        { "name": "nda", "branch": "master" }
     ]
 }

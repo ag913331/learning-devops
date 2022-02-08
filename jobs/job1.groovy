@@ -8,10 +8,10 @@ config["repos"].eachWithIndex { repo, index ->
     job("DSL_JOB_${index}") {
         concurrentBuild()
         scm {
-            github(config["from"] + repo, 'master')
+            github(config["from"] + repo["name"], repo["branch"])
         }
         steps {
-            shell ("Checking ---> $index")
+            shell ("Checking --->")
         }
     }
 }
