@@ -4,13 +4,10 @@ hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWo
 def config = new JsonSlurper().parseText(new File("${workspace}/github.json").text)
 // def content = readFileFromWorkspace("seedA", "github.json")
 
-for(i in 0..2) {
-    job("Repo${i}") {
-        // scm {
-        //     git(repos[i])
-        // }
+config["repos"].eachWithIndex { repo, index -> 
+    job("DSL_JOB_${index}") {
         steps {
-            shell("printf ${config}")
+            shell ("print ${repo}")
         }
     }
 }
