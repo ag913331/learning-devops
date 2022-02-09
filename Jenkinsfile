@@ -1,30 +1,27 @@
 pipeline {
+    environment {
+        def config = readJSON file: '../seedA/config.json'
+        jo = "${config}"
+    }
+
     agent any
     stages {
-        stage('CheckoutModule1') {
+        stage('Checkout stage') {
             steps {
-                sh 'mkdir -p Module1'
-                dir("Module1")
-                {
-                    git branch: "master",
-                    credentialsId: '928429e8-5c06-4b6e-9f83-7a02081edc5e',
-                    url: 'https://github.com/georgievalexandro/learning-devops.git'
+                echo "This is checkout stage"
+                
+                script {
+                    jo.repos.eachWithIndex { repo, index -> 
+                        echo '${repo.name}'
+                    }
                 }
             }
         }
-
-        stage('CheckoutModule2') {
+        stage('Build') {
             steps {
-                sh 'mkdir -p Module2'
-                dir("Module2")
-                {
-                    git branch: "master",
-                    credentialsId: '1ce5941d-f076-4867-940b-f67f41ecc79c',
-                    url: 'https://github.com/georgievalexandro/nda.git'
-                }
+                echo 'Building'
             }
         }
-
         stage('Test') {
             steps {
                 echo 'Testing'
