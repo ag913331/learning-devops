@@ -1,12 +1,6 @@
-import groovy.json.JsonSlurper;
+import groovy.json.JsonSlurper
 
-def jsonSlurper = new JsonSlurper()
+hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWorkspace()
+def config = new JsonSlurper().parse(new File("${workspace}/config.json"))
 
-File fl = new File('../config.json')
-
-// parse(File file) method is available since 2.2.0
-def obj = jsonSlurper.parse(fl)
-
-print obj
-// for versions < 2.2.0 it's possible to use
-// def old = jsonSlurper.parse(fl.text)
+println config
