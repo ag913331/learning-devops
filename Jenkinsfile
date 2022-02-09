@@ -1,17 +1,13 @@
 pipeline {
-    environment {
-        def config = readJSON file: '../seedA/config.json'
-        jo = "${config}"
-    }
-
     agent any
+    
     stages {
         stage('Checkout stage') {
             steps {
+                echo "This is checkout stage"
                 script {
-                    jo.repos.eachWithIndex { repo, index -> 
-                        echo '${repo.name}'
-                    }
+                    def config = readJSON file: '../seedA/config.json'
+                    echo config
                 }
             }
         }
