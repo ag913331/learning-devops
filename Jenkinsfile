@@ -7,8 +7,8 @@ pipeline {
             agent any
             stages {
                 stage('Checkout stage') {
-                    ${config["repos"]}.eachWithIndex { repo, index -> 
-                        steps {
+                    steps {
+                        config["repos"].eachWithIndex { repo, index -> 
                             echo '${repo["name"]}'
                         }
                     }
