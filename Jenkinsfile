@@ -8,8 +8,8 @@ pipeline {
         stage('Checkout stage') {
             steps {
                 script {
-                    config["repos"].eachWithIndex { repo, index -> 
-                        echo '${repo["name"]}'
+                    config.repos.eachWithIndex { repo, index -> 
+                        echo '${repo.name}'
                     }
                 }
             }
