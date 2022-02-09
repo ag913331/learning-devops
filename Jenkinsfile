@@ -1,5 +1,8 @@
 pipeline {
-    def config = readJSON file: 'config.json'
+    environment {
+        def config = readJSON file: 'config.json'
+    }
+
     agent any
     stages {
         stage('Checkout stage') {
