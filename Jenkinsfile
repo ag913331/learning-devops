@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        def config = readJSON file: '../seedA/config.json'
+        jo = "${config}"
+    }
+
     agent any
     stages {
         stage('Checkout stage') {
