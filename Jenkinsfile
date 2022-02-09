@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        def config = readJSON file: '../SeedA/config.json'
+        def config = readJSON file: '../seedA/config.json'
     }
 
     agent any
