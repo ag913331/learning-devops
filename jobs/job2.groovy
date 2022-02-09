@@ -6,7 +6,7 @@ def config = new JsonSlurper().parseText(new File("${workspace}/config.json").te
 pipelineJob('PJ') {
   definition {
     cps {
-      script('''
+      script("
         pipeline {
             agent any
             stages {
@@ -29,7 +29,7 @@ pipelineJob('PJ') {
                 }
             }
         }
-      '''.stripIndent())
+      ".stripIndent())
       sandbox()     
     }
   }
