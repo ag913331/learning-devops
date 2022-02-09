@@ -1,15 +1,14 @@
-import groovy.json.JsonSlurper
-
-hudson.FilePath workspace = hudson.model.Executor.currentExecutor().getCurrentWorkspace()
-def config = new JsonSlurper().parseText(new File("${workspace}/config.json").text)
+def config = readJSON file: 'dir/config.json'
 
 pipeline {
             agent any
             stages {
                 stage('Checkout stage') {
                     steps {
-                        config["repos"].eachWithIndex { repo, index -> 
-                            echo '${repo["name"]}'
+                        script {
+                            config["repos"].eachWithIndex { repo, index -> 
+                                echo '${repo["name"]}'
+                            }
                         }
                     }
                 }
