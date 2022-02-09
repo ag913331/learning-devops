@@ -2,7 +2,7 @@ import groovy.json.JsonSlurper;
 
 def jsonSlurper = new JsonSlurper()
 
-File fl = new File('${workspace}/config.json')
+File fl = new File('../config.json')
 
 // parse(File file) method is available since 2.2.0
 def obj = jsonSlurper.parse(fl)
