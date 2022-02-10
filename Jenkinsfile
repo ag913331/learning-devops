@@ -28,4 +28,18 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo 'Doing some cleanup'
+        }
+
+        success {
+            echo 'Great success'
+        }
+
+        failure {
+            echo 'Something went wrong'
+        }
+    }
 }
