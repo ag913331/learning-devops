@@ -1,7 +1,15 @@
-pipelineJob('PJ') {
+pipelineJob('checkout_dev_ops') {
   definition {
-    cps {
-      script(readFileFromWorkspace('Jenkinsfile'))
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url('https://github.com/georgievalexandro/learning-devops.git')
+          }
+          branch('*/master')
+        }
+      }
+      lightweight()
     }
   }
 }

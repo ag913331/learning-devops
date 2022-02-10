@@ -1,22 +1,15 @@
-pipeline {
-    agent any
-    stages {
-        stage('Checkout stage') {
-            steps {
-                echo "This is checkout stage"
-                
-                sh '''git clone -b master https://github.com/georgievalexandro/learning-devops.git'''
-            }
+pipelineJob('checkout_dev_ops') {
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            url('https://github.com/georgievalexandro/learning-devops.git')
+          }
+          branch('*/master')
         }
-        stage('Build') {
-            steps {
-                echo 'Building'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing'
-            }
-        }
+      }
+      lightweight()
     }
+  }
 }
