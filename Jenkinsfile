@@ -1,15 +1,31 @@
-pipelineJob('checkout_dev_ops') {
-  definition {
-    cpsScm {
-      scm {
-        git {
-          remote {
-            url('https://github.com/georgievalexandro/learning-devops.git')
-          }
-          branch('*/master')
-        }
-      }
-      lightweight()
+pipeline {
+    environment {
+        def config = readJSON file: '../seedA/config.json'
+        jo = "${config}"
     }
-  }
+
+    agent any
+    stages {
+        stage('Checkout stage') {
+            steps {
+                echo "This is checkout stage"
+                
+                script {
+                    jo.repos.eachWithIndex { repo, index -> 
+                        echo '${repo.name}'
+                    }
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing'
+            }
+        }
+    }
 }
