@@ -1,20 +1,11 @@
 pipeline {
-    environment {
-        def config = readJSON file: '../seedA/config.json'
-        jo = "${config}"
-    }
-
     agent any
     stages {
         stage('Checkout stage') {
             steps {
                 echo "This is checkout stage"
                 
-                script {
-                    jo.repos.eachWithIndex { repo, index -> 
-                        echo '${repo.name}'
-                    }
-                }
+                sh '''git clone -b master https://github.com/georgievalexandro/learning-devops.git'''
             }
         }
         stage('Build') {
