@@ -11,7 +11,7 @@ app = Celery('tasks', broker=BROKER_URL)
 
 @app.task(name='try to download')
 def download(server, remote_dir, local_dir):
-    # update status - completed_count
+    # TODO: update status - completed_count
     return subprocess.run(f"rsync -aivz --progress --append {server}:{remote_dir}/*.pcap {local_dir}/", shell=True)
 
 @app.task(name='Pull file', bind=True)
