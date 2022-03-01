@@ -15,34 +15,98 @@ logger = logging.getLogger(__name__)
 
 app = Celery('tasks', backend=BACKEND_URL, broker=BROKER_URL)
 
-@app.task(name="Find remote files")
-def find_remote_files(plan):
-    result = []
-    for f in plan:
-        ln = f.strip()
-        out = subprocess.run(f"find ~/work/server_1/logs -name {ln}", shell=True, capture_output=True, text=True)
-        if out.stdout:
-            result.append(out.stdout.strip())
+@app.task(name='Download file', bind=True)
+def download_file(self, server, file):
+    dest_path = file['dest_path']
+    source_path = file['source_path']
+    Path(dest_path).mkdir(parents=True, exist_ok=True) # check result
+    out = subprocess.run(f"rsync -aivz --append {server}{source_path} {dest_path}", shell=True)
+    if out.returncode != 0:
+        print("FAILED!!!")
+        return False
 
-    return result
+    print("COPIED!!!")
+    return True
 
-# ================ WORKING ===============================================
-@app.task(name='Attempt download', bind=True)
-def download(self, args):
-    local_dir = Path(f"media/logs/logs_server_1_day_pcap")
-    result = {}
-    for remote_file in args:
-        try:
-            out = subprocess.run(f"rsync -aivz --info=progress2 --human-readable --append {remote_file} {local_dir}/", shell=True)
+@app.task(name='Download files from manifest', bind=True)
+def download_manifest(self, manifest):
+    server = manifest['server']
+    files = manifest['files']
+    for file in files:
+        download_file.apply_async((server, file)) # retries?
+        print(f"{file['source_path']} download start")
+        # if file download has failed -> mark whole manifest as failed
+    # all good result
+    # return {"success": "manifest downloaded"}
+
+@app.task(name='Progress manager for download')
+def download_progress_tracker():
+    counter = 1000
+    while counter > 0:
+        print("tracking")
+        counter -= 1
+
+    return counter
+    # every 5 minutes, or whatever
+    # local_size_total = 0
+    # remote_size_total = 0
+    # for file in files:
+    #     local_size_total += Path(file['dest_path']).stat().st_size()
+    #     remote_size_total += file['size']
+    # report progress -> local_size_total / remote_size_total
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.task(name="Find remote files")
+# def find_remote_files(plan):
+#     result = []
+#     for f in plan:
+#         ln = f.strip()
+#         out = subprocess.run(f"find ~/work/zh_22_server_1/logs -name {ln}", shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+#         print("===out===")
+#         print(out)
+#         if out.stdout:
+#             print("====out.stdout====")
+#             print(out.stdout)
+#             result.append(out.stdout.strip())
+
+#     return result
+
+# # ================ WORKING ===============================================
+# @app.task(name='Attempt download', bind=True)
+# def download(self, args):
+#     local_dir = Path(f"media/logs/logs_zh_22_server_1_day_pcap")
+#     result = {}
+#     for remote_file in args:
+#         try:
+#             out = subprocess.run(f"rsync -aivz --info=progress2 --human-readable --append {remote_file} {local_dir}/", shell=True)
             
-            file = remote_file.split('/')[-1]
-            if out.returncode == 0:
-                result.update({file: file + ' from ' + '[server_1]:[' + remote_file + ']' + ' was pulled successfully'})
+#             file = remote_file.split('/')[-1]
+#             if out.returncode == 0:
+#                 result.update({file: file + ' from ' + '[zh_22_server_1]:[' + remote_file + ']' + ' was pulled successfully'})
         
-        except (subprocess.CalledProcessError, subprocess.SubprocessError, subprocess.TimeoutExpired) as exc:
-            raise self.retry(exc=exc)
+#         except (subprocess.CalledProcessError, subprocess.SubprocessError, subprocess.TimeoutExpired) as exc:
+#             raise self.retry(exc=exc)
 
-    return result
+#     return result
 # ================ WORKING ===============================================
 
 # @app.task(name='Attempt download', bind=True)
@@ -128,7 +192,7 @@ def pull_zhenyu_bucket(self, bucket, date):
             results[acc] = (status, sys.stdout.getvalue())
 
         except:
-            logger.exception(e)
+            # logger.exception(e)
             print('Try {0}/{1}'.format(self.request.retries, self.max_retries))
             self.retry()
             traceback.print_exc()
