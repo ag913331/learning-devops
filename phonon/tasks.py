@@ -11,6 +11,7 @@ import logging
 
 BROKER_URL = 'redis://localhost:6379/0'
 BACKEND_URL = 'redis://localhost:6379/1'
+LOCAL = '/home/r3d/work/'
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,17 @@ app = Celery('tasks', backend=BACKEND_URL, broker=BROKER_URL)
 #     # Calls test('hello') every 10 seconds.
 #     sender.add_periodic_task(60.0*5, download_progress_tracker.s('check progress again'), name='check progress every 5 min')
 
+@app.task(name="Find remote files")
+def find_remote_files(server, plan):
+    result = []
+    for f in plan:
+        ln = f.strip()
+        out = subprocess.run(f"find {LOCAL}{server} -type f -name {ln}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        if out.stdout:
+            result.append(out.stdout.strip())
+
+    return result
+
 @app.task(name='Download file', bind=True, default_retry_delay=10)
 def download_file(self, server, file):
     dest_path = file['dest_path']
@@ -28,7 +40,7 @@ def download_file(self, server, file):
     Path(dest_path).mkdir(parents=True, exist_ok=True) # check result
 
     try:
-        out = subprocess.run(f"rsync -aivz --append {server}{source_path} {dest_path}", shell=True)
+        out = subprocess.run(f"rsync -aivz --append {source_path} {dest_path}", shell=True)
         if out.returncode != 0:
             raise Exception("Failed to download")
         
@@ -49,9 +61,6 @@ def download_file(self, server, file):
         print('Try {0}/{1}'.format(self.request.retries, self.max_retries))
         self.retry()
 
-    print("COPIED!!!")
-    return True
-
 @app.task(name='Download files from manifest', bind=True)
 def download_manifest(self, manifest):
     server = manifest['server']
@@ -61,6 +70,18 @@ def download_manifest(self, manifest):
             'max_retries': 3,
         }) # retries?
         print(f"{file['source_path']} download start")
+        # if result.ready():
+        #     print("Task has run")
+        #     if result.successful():
+        #         print("Result was: %s" % result.result)
+        #     else:
+        #         if isinstance(result.result, Exception):
+        #             print("Task failed due to raising an exception")
+        #             raise result.result
+        #         else:
+        #             print("Task failed without raising exception")
+        # else:
+        #     print("Task has not yet run")
         # if file download has failed -> mark whole manifest as failed
     # all good result
     return True
@@ -120,24 +141,6 @@ def pull_zhenyu(self, manifest):
 
 
 
-
-
-
-
-# @app.task(name="Find remote files")
-# def find_remote_files(plan):
-#     result = []
-#     for f in plan:
-#         ln = f.strip()
-#         out = subprocess.run(f"find ~/work/zh_22_server_1/logs -name {ln}", shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
-#         print("===out===")
-#         print(out)
-#         if out.stdout:
-#             print("====out.stdout====")
-#             print(out.stdout)
-#             result.append(out.stdout.strip())
-
-#     return result
 
 # # ================ WORKING ===============================================
 # @app.task(name='Attempt download', bind=True)
