@@ -1,6 +1,7 @@
 import time
-from celery import Celery
+from celery import Celery, current_task
 from celery.schedules import crontab
+from celery.result import AsyncResult
 import subprocess
 import sys, io, traceback
 from pathlib import Path
@@ -8,6 +9,7 @@ import csv
 from typing import List, Dict, Tuple, Optional
 import datetime
 import logging
+from time import sleep
 
 BROKER_URL = 'redis://localhost:6379/0'
 BACKEND_URL = 'redis://localhost:6379/1'
@@ -20,7 +22,65 @@ app = Celery('tasks', backend=BACKEND_URL, broker=BROKER_URL)
 # @app.on_after_configure.connect
 # def setup_periodic_tasks(sender, **kwargs):
 #     # Calls test('hello') every 10 seconds.
-#     sender.add_periodic_task(60.0*5, download_progress_tracker.s('check progress again'), name='check progress every 5 min')
+#     sender.add_periodic_task(5, download_progress_tracker.s('check progress again'), name='check progress every 5 min')
+def watch(job):
+    task = AsyncResult(job.id)
+    task_process = 'RUNNING'
+    try:
+        while task_process == 'RUNNING':
+
+            # check for STATUS:
+            if  task.status == 'REVOKED':
+                meta = {
+                    "status":       task.result['status'],
+                    "task_message": task.result['message'],
+                    "error":        task.result['error'],
+                }
+            elif task.status == 'PROGRESS':
+                meta = {
+                    "status":       task.result['status'],
+                    "task_message": task.result['message'],
+                    "error":        task.result['error'],
+                }
+            elif task.status == 'SUCCESS':
+                meta = {
+                    "status":       "SUCCESS",
+                    "task_message": "completed",
+                    "error":        task.result['error'],
+                }
+            elif task.status == 'PENDING':
+                meta = {
+                    "status":       'PENDING',
+                    "task_message": "Preparing... ",
+                    "error":        None,
+                }
+            else:
+                meta = {
+                    "status":       "?",
+                    "task_message": "",
+                    "error":        "",
+                }
+            
+            if task.result != None and task.status != "PENDING":
+                if  task.result['status'] == 'OK':
+                    task_process = "OK"
+                    return meta
+                elif task.result['status'] == 'ERROR':
+                    task_process = "ERROR"
+                    break
+
+            current_task.update_state(
+                state=task.status,
+                meta=meta
+            )
+            sleep(0.1)
+    except Exception as e:
+        meta['error'] = 'Error in Task Monitoring: ' + str(e)
+    finally:
+        # do some cleaning
+        pass
+    return meta
+
 
 @app.task(name="Find remote files")
 def find_remote_files(server, plan):
@@ -44,8 +104,19 @@ def download_file(self, server, file):
         if out.returncode != 0:
             raise Exception("Failed to download")
         
+        # print(f"DOWNLOAD {source_path} DONE")
+        current_task.update_state(
+            state="PROGRESS",
+            meta={
+                'file':     file['source_path'],
+                'status':   "PROGRESS",
+                'message':  "Downloading file...",
+                'error':    None
+            }
+        )
+
+
         sha1sum_remote = file['sha1sum']
-        print(sha1sum_remote)
         local_file = source_path.split("/")[-1]
         sh1_out = subprocess.run(f"sha1sum {dest_path}/{local_file}", shell=True, stdout=subprocess.PIPE)
         if out.returncode != 0:
@@ -57,34 +128,75 @@ def download_file(self, server, file):
             print(f"[ERR] Sanity check failed for {source_path} - sha1 does not match! Check the upload manually!")
             raise Exception("[ERR] Sanity check failed")
     except Exception as e:
-        logger.exception(e)
-        print('Try {0}/{1}'.format(self.request.retries, self.max_retries))
-        self.retry()
+        # logger.exception(e)
+        # print('Try {0}/{1}'.format(self.request.retries, self.max_retries))
+        # self.retry()
+        outcome = {
+            'file':     file['source_path'],
+            'status':   "FAILED",
+            'message':  f"Downloading [{file['source_path']}] failed",
+            'error':    f"Error while downloading [{file['source_path']}]"
+        }
+
+        return outcome
+
+    outcome = {
+        'file':     file['source_path'],
+        'status':   "COMPLETED",
+        'message':  f"Downloading [{file['source_path']}] succeeded",
+        'error':    None
+    }
+
+    return outcome
 
 @app.task(name='Download files from manifest', bind=True)
 def download_manifest(self, manifest):
     server = manifest['server']
+    print(f"Download manifest for {server}")
     files = manifest['files']
-    for file in files:
-        download_file.apply_async((server, file), retry=True, retry_policy={ 
-            'max_retries': 3,
-        }) # retries?
-        print(f"{file['source_path']} download start")
-        # if result.ready():
-        #     print("Task has run")
-        #     if result.successful():
-        #         print("Result was: %s" % result.result)
-        #     else:
-        #         if isinstance(result.result, Exception):
-        #             print("Task failed due to raising an exception")
-        #             raise result.result
-        #         else:
-        #             print("Task failed without raising exception")
-        # else:
-        #     print("Task has not yet run")
-        # if file download has failed -> mark whole manifest as failed
-    # all good result
-    return True
+    for i, file in enumerate(files):
+        print(i, file["source_path"])
+        job = download_file.apply_async((server, file))
+        outcome = watch(job)
+        if outcome['error'] != None:
+            print ("[download_file] failed or revoked!")
+            parent_state = "FAILURE",
+            parent_meta = {
+                'file':     file['source_path'],
+                'status':   "FAILED",
+                'message':  "ERROR: {}.".format(outcome['error']),
+            }
+            current_task.update_state(
+                state=parent_state,
+                meta=parent_meta
+            )
+        else:
+            print("+++++++++++++++++++++++++++++++++++++++++++")
+            parent_state = "PROGRESS"
+            parent_meta = {
+                'file':     i,
+                'status':   "SUCCESS",
+                'message':    "Execution of [download_file] finished."
+            }
+            current_task.update_state(
+                state=parent_state,
+                meta=parent_meta
+            )
+        
+    parent_state = "SUCCESS"
+    parent_meta = {
+        'file':     i,
+        'status':   "SUCCESS",
+        'message':  "All files downloaded"
+    }
+    current_task.update_state(
+        state=parent_state,
+        meta=parent_meta
+    )
+    sleep(10)
+    return parent_meta
+
+
 
 @app.task(name='Progress manager for download')
 def download_progress_tracker(manifest):
@@ -109,13 +221,16 @@ def pull_zhenyu(self, manifest):
         print("Manifest missing or corrupted")
         return False
 
-    result = download_manifest.apply_async([manifest])
+    download_manifest.apply_async([manifest])
 
-    progress = download_progress_tracker.delay(manifest)
-    while not result.ready():
-        print("Waiting")
+    # progress = download_progress_tracker.delay(manifest)
 
-    progress.revoke(terminate=True)
+
+
+    # while not result.ready():
+    #     print("Waiting")
+
+    # progress.revoke(terminate=True)
 
 
     return True
