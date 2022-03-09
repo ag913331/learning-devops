@@ -9,7 +9,7 @@ job('maya_build_dsl') {
     parameters {
         stringParam {
             name("Planet")
-            defaultValue("Earth")
+            defaultValue(" Earth ")
             description("A nice description")
             trim(true)
         }
