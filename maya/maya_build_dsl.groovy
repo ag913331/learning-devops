@@ -18,6 +18,6 @@ job('maya_build_dsl') {
     }
 
     steps {
-        shell("echo ${Planet}")
+        shell("echo $Planet")
     }
 }
