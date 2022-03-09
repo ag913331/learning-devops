@@ -1,14 +1,18 @@
 job('maya_build_dsl') {
-    // def test_run_script() {
-    //     return shell()
-    // }
     description("Testing maya_build via dsl")
-    publishers {
-        publishBuild {
-            discardOldBuilds(1, 2)
-        }
+    // publishers {
+    //     publishBuild {
+    //         discardOldBuilds(1, 2)
+    //     }
+    // }
+
+    parameters {
+        stringParam ('Planet', ' earth', 'Some description', true)
+        booleanParam ('FLAG', true)
+        choiceParam('OPTION', ['option 1 (default)', 'option 2', 'option 3'])
     }
+
     steps {
-        shell(readFileFromWorkspace('scripts/say_hello.py'))
+        shell("echo Testing")
     }
 }
