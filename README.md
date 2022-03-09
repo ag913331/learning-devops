@@ -1,1 +1,1 @@
-- initial
+- Training ground for Jenkins JobDSL jobs
