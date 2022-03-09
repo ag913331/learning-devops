@@ -7,7 +7,12 @@ job('maya_build_dsl') {
     // }
 
     parameters {
-        stringParam ('Planet', ' earth', 'Some description')
+        stringParam {
+            name("Planet")
+            defaultValue("Earth")
+            description("A nice description")
+            trim(true)
+        }
         booleanParam ('FLAG', true)
         choiceParam('OPTION', ['option 1 (default)', 'option 2', 'option 3'])
     }
