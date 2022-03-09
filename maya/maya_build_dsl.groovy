@@ -4,6 +4,6 @@ job('maya_build_dsl') {
     // }
 
     steps {
-        shell('echo Hello from Groovy!')
+        shell(readFileFromWorkspace('scripts/say_hello.py'))
     }
 }
