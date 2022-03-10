@@ -1,5 +1,3 @@
-def pipeline_script = readFileFromWorkspace('pipeline_script.groovy')
-
 pipelineJob("greetingJob") {
     description("Testing")
     parameters {
@@ -7,7 +5,18 @@ pipelineJob("greetingJob") {
     }
 
     definition {
-        cps {
+        cpsScm {
+            scm {
+                git {
+                    branch('master')
+                    remote {
+                        credentials() // c7451d39-c220-4088-b7c0-4331ab39a2ba
+                        url('https://github.com/ag913331/learning-devops')
+                    }
+                }
+
+                scriptPath('test_dsl/pipeline_script.groovy')
+            }
             // script('''
             //         pipeline {
             //             agent any                    
@@ -20,7 +29,6 @@ pipelineJob("greetingJob") {
             //             }
             //         }
             // '''.stripIndent())
-            script(pipeline_script)
          }
      }
 }
