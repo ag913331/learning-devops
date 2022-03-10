@@ -1,4 +1,5 @@
 pipelineJob("anotherJob") {
+    displayName("Yet Another Job")
     description("Testing another job")
     parameters {
         stringParam('name', "Ani", 'name of the person')
@@ -33,10 +34,6 @@ pipelineJob("anotherJob") {
 
     // disabled() // Disable this project
     // quietPeriod(5) // Quiet period
-
-    // notifications {
-    //     endpoint("http://localhost:8080/job/testSEED/ws/jobs", "HTTP", "JSON")
-    // }
 
     definition {
         cps {
