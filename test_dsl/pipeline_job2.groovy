@@ -7,7 +7,7 @@ pipelineJob("anotherJob") {
         buildDiscarder { strategy { logRotator(1, 3, 1, 1) } }
         disableConcurrentBuilds()
         disableResume()
-        githubProjectProperty('https://github.com/ag913331/learning-devops', 'learning-devops')
+        githubProjectProperty("https://github.com/ag913331/learning-devops", "learning-devops")
     }
 
     definition {
