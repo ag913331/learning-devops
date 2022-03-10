@@ -6,6 +6,7 @@ pipelineJob("anotherJob") {
     properties {
         buildDiscarder { strategy { logRotator(1, 3, 1, 1) } }
         disableConcurrentBuilds()
+        disableResume()
     }
 
     definition {
