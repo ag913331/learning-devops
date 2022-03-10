@@ -34,9 +34,9 @@ pipelineJob("anotherJob") {
     // disabled() // Disable this project
     // quietPeriod(5) // Quiet period
 
-    notifications {
-        endpoint("http://localhost:8080/job/testSEED/ws/jobs", "HTTP", "JSON")
-    }
+    // notifications {
+    //     endpoint("http://localhost:8080/job/testSEED/ws/jobs", "HTTP", "JSON")
+    // }
 
     definition {
         cps {
