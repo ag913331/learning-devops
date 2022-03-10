@@ -4,10 +4,7 @@ pipelineJob("anotherJob") {
         stringParam('name', "Ani", 'name of the person')
     }
     properties {
-        buildDiscarder { strategy { logRotator { 
-            daysToKeepStr('1')
-            numToKeepStr('3')
-        } } }
+        buildDiscarder { strategy { logRotator(1, 3, 1, 1) } }
         disableConcurrentBuilds()
     }
 
