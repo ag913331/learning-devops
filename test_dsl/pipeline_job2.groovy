@@ -16,6 +16,11 @@ pipelineJob("anotherJob") {
         preserveStashes { buildCount(1) } // Preserve stashes from completed builds
     }
 
+    environmentVariables {
+        env('nickname', 'Alex')
+        env('age', 25)
+    }
+
     // triggers {
     //     upstream { // Build after other projects are built
     //         upstreamProjects("greetingJob")
@@ -44,6 +49,12 @@ pipelineJob("anotherJob") {
                         stage('Another Greeting') {
                             steps {
                                 echo "Hello!! ${name}"
+                            }
+                        }
+
+                        stage('Who is this?') {
+                            steps {
+                                echo "${env.nickname} - ${env.age}"
                             }
                         }
                     }
