@@ -52,7 +52,7 @@ pipelineJob("anotherJob") {
                     }
                     post {
                         success {
-                            echo "Save status on success" >> status.txt
+                            writeFile file: 'status.txt', text: 'status: SUCCESS, timestamp...'
                         }
                     }
                 }'''.stripIndent()
