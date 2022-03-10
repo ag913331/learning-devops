@@ -11,7 +11,7 @@ pipelineJob("anotherJob") {
             projectUrlStr("https://github.com/ag913331/learning-devops") 
             displayName("learning-devops")
         }
-        durabilityHint { hint("Try this") }
+        durabilityHint { hint("PERFORMANCE_OPTIMIZED") }
     }
 
     definition {
