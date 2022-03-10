@@ -17,18 +17,19 @@ pipelineJob("greetingJob") {
 
                 scriptPath('test_dsl/pipeline_script.groovy')
             }
-            // script('''
-            //         pipeline {
-            //             agent any                    
-            //             stages {
-            //                 stage('Greet') {
-            //                     steps {
-            //                         echo "Hello!! ${name}"
-            //                     }
-            //                 }
-            //             }
-            //         }
-            // '''.stripIndent())
+         }
+     }
+}
+
+pipelineJob("anotherJob") {
+    description("Testing another job")
+    parameters {
+        stringParam('name', "Ani", 'name of the person')
+    }
+
+    definition {
+        cps {
+            script('echo Another job')
          }
      }
 }
