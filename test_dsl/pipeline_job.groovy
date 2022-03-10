@@ -29,7 +29,18 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            script('echo Another job')
+            script('''
+                pipeline {
+                    agent any                    
+                    stages {
+                        stage('Another Greeting') {
+                            steps {
+                                echo "Hello!! ${name}"
+                            }
+                        }
+                    }
+                }'''.stripIndent()
+            )
          }
      }
 }
