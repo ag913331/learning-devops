@@ -52,7 +52,7 @@ pipelineJob("anotherJob") {
                     }
                     post {
                         success {
-                            echo "Save status on success"
+                            echo "Save status on success" >> status.txt
                         }
                     }
                 }'''.stripIndent()
