@@ -31,6 +31,9 @@ pipelineJob("anotherJob") {
         } 
     }
 
+    disabled()
+    quietPeriod(5)
+
     definition {
         cps {
             script('''
