@@ -21,7 +21,14 @@ pipelineJob("anotherJob") {
             threshold("SUCCESS")
         }
 
-        cron("H/15 * * * *")
+        cron("H/15 * * * *") // Build periodically
+
+        gitHubPushTrigger() // GitHub hook trigger for GITScm polling
+
+        pollSCM { // Poll SCM
+            scmpoll_spec("H/12 * * * *")
+            ignorePostCommitHooks(true)
+        } 
     }
 
     definition {
