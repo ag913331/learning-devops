@@ -15,24 +15,26 @@ pipelineJob("anotherJob") {
         preserveStashes { buildCount(1) } // Preserve stashes from completed builds
     }
 
-    triggers {
-        upstream { // Build after other projects are built
-            upstreamProjects("greetingJob")
-            threshold("SUCCESS")
-        }
+    // triggers {
+    //     upstream { // Build after other projects are built
+    //         upstreamProjects("greetingJob")
+    //         threshold("SUCCESS")
+    //     }
 
-        cron("H/15 * * * *") // Build periodically
+    //     cron("H/15 * * * *") // Build periodically
 
-        gitHubPushTrigger() // GitHub hook trigger for GITScm polling
+    //     gitHubPushTrigger() // GitHub hook trigger for GITScm polling
 
-        pollSCM { // Poll SCM
-            scmpoll_spec("H/12 * * * *")
-            ignorePostCommitHooks(true)
-        } 
-    }
+    //     pollSCM { // Poll SCM
+    //         scmpoll_spec("H/12 * * * *")
+    //         ignorePostCommitHooks(true)
+    //     } 
+    // }
 
-    disabled()
-    quietPeriod(5)
+    // disabled() // Disable this project
+    quietPeriod(5) // Quiet period
+
+    notifications("http://localhost:8080/job/testSEED/ws/jobs", "HTTP", "JSON")
 
     definition {
         cps {
