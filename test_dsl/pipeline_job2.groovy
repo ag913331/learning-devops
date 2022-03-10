@@ -34,7 +34,7 @@ pipelineJob("anotherJob") {
     // disabled() // Disable this project
     quietPeriod(5) // Quiet period
 
-    notifications("http://localhost:8080/job/testSEED/ws/jobs", "HTTP", "JSON")
+    notifications("http://localhost:8080/job/testSEED/ws/jobs")
 
     definition {
         cps {
