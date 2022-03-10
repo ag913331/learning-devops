@@ -1,3 +1,5 @@
+def pipeline_script = readFileFromWorkspace('pipeline_script.groovy')
+
 pipelineJob("greetingJob") {
     description("Testing")
     parameters {
@@ -18,7 +20,7 @@ pipelineJob("greetingJob") {
             //             }
             //         }
             // '''.stripIndent())
-            script(readFileFromWorkspace('pipeline_script.groovy'))
+            script(pipeline_script)
          }
      }
 }
