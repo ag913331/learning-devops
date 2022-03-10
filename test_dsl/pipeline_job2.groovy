@@ -13,10 +13,13 @@ pipelineJob("anotherJob") {
         }
         durabilityHint { hint("PERFORMANCE_OPTIMIZED") } // Pipeline speed/durability override
         preserveStashes { buildCount(1) } // Preserve stashes from completed builds
-        upstream { // Build after other projects are built
+    }
+
+    triggers {
+        upstream {
             upstreamProjects("greetingJob")
             threshold("SUCCESS")
-         }  
+        } 
     }
 
     definition {
