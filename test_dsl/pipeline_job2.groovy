@@ -16,10 +16,12 @@ pipelineJob("anotherJob") {
     }
 
     triggers {
-        upstream {
+        upstream { // Build after other projects are built
             upstreamProjects("greetingJob")
             threshold("SUCCESS")
-        } 
+        }
+
+        cron("H/15 * * * *")
     }
 
     definition {
