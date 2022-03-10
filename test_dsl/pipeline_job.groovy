@@ -20,27 +20,3 @@ pipelineJob("greetingJob") {
          }
      }
 }
-
-pipelineJob("anotherJob") {
-    description("Testing another job")
-    parameters {
-        stringParam('name', "Ani", 'name of the person')
-    }
-
-    definition {
-        cps {
-            script('''
-                pipeline {
-                    agent any                    
-                    stages {
-                        stage('Another Greeting') {
-                            steps {
-                                echo "Hello!! ${name}"
-                            }
-                        }
-                    }
-                }'''.stripIndent()
-            )
-         }
-     }
-}
