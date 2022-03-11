@@ -15,7 +15,7 @@ job("Dsl_job") {
     }
     steps {
         shell("echo Testing dsl job")
-        sh "printenv"
+        shell("printenv")
     }
     
     
