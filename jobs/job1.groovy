@@ -5,9 +5,9 @@ job("Dsl_job") {
     authorization {                 // Creates permission records. 
         permissionAll('r3d')
     }
-    blockOn('testSeed')             // Block build if certain jobs are running. 
+    // blockOn('testSeed')             // Block build if certain jobs are running. 
     checkoutRetryCount(3)           // Sets the number of times the SCM checkout is retried on errors. 
-    compressBuildLog()              // Compresses the log file after build completion. 
+    // compressBuildLog()              // Compresses the log file after build completion. 
     concurrentBuild()               // Allows Jenkins to schedule and execute multiple builds concurrently.
     displayName('DSL_JOB')          // Sets the name to display instead of the actual name. 
     label('built-in')                    // Label which specifies which nodes this job can run on. 
@@ -18,7 +18,7 @@ job("Dsl_job") {
     steps {
         shell("echo Testing dsl job")
         // shell("printenv")
-        shell("echo $ONE")
+        shell("echo ${ONE}")
     }
     
     
