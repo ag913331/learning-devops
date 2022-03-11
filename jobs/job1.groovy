@@ -18,7 +18,7 @@ job("Dsl_job") {
     steps {
         shell("echo Testing dsl job")
         // shell("printenv")
-        shell("echo ${file}")
+        shell("echo ${file['from']}")
     }
     
     
