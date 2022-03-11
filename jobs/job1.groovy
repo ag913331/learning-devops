@@ -10,8 +10,8 @@ job("Dsl_job") {
     displayName('DSL_JOB')          // Sets the name to display instead of the actual name. 
     steps {
         shell("echo Testing dsl job")
-        dsl {
-            text('''
+        jobDsl {
+            scriptText('''
                 pipeline {
                     agent any
                     stages {
