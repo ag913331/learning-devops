@@ -1,4 +1,4 @@
-def file = readFileFromWorkspace('config.json')
+def file = readFileFromWorkspace('test.sh')
 
 job("Dsl_job") {
     // authenticationToken('secret')
@@ -18,7 +18,7 @@ job("Dsl_job") {
     steps {
         shell("echo Testing dsl job")
         // shell("printenv")
-        shell('''echo file["from"]''')
+        batchFile(file)
     }
     
     

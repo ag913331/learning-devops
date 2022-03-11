@@ -21,24 +21,24 @@ pipelineJob("anotherJob") {
         env('age', 25)
     }
 
-    // triggers {
-    //     upstream { // Build after other projects are built
-    //         upstreamProjects("greetingJob")
-    //         threshold("SUCCESS")
-    //     }
+    triggers {
+        upstream { // Build after other projects are built
+            upstreamProjects("greetingJob")
+            threshold("SUCCESS")
+        }
 
-    //     cron("H/15 * * * *") // Build periodically
+        cron("H/15 * * * *") // Build periodically
 
-    //     gitHubPushTrigger() // GitHub hook trigger for GITScm polling
+        gitHubPushTrigger() // GitHub hook trigger for GITScm polling
 
-    //     pollSCM { // Poll SCM
-    //         scmpoll_spec("H/12 * * * *")
-    //         ignorePostCommitHooks(true)
-    //     } 
-    // }
+        pollSCM { // Poll SCM
+            scmpoll_spec("H/12 * * * *")
+            ignorePostCommitHooks(true)
+        } 
+    }
 
-    // disabled() // Disable this project
-    // quietPeriod(5) // Quiet period
+    disabled() // Disable this project
+    quietPeriod(5) // Quiet period
 
     definition {
         cps {
