@@ -8,7 +8,7 @@ job("Dsl_job") {
     compressBuildLog()              // Compresses the log file after build completion. 
     concurrentBuild()               // Allows Jenkins to schedule and execute multiple builds concurrently.
     displayName('DSL_JOB')          // Sets the name to display instead of the actual name. 
-    label('Built-In Node')                    // Label which specifies which nodes this job can run on. 
+    label('built-in')                    // Label which specifies which nodes this job can run on. 
     steps {
         shell("echo Testing dsl job")
     }
