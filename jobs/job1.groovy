@@ -1,4 +1,5 @@
-def file = readFileFromWorkspace('test.sh')
+APP_SAY = '''#!/bin/sh
+echo Hello Jenkins'''
 
 job("Dsl_job") {
     // authenticationToken('secret')
@@ -18,7 +19,7 @@ job("Dsl_job") {
     steps {
         shell("echo Testing dsl job")
         // shell("printenv")
-        batchFile(file)
+        shell(APP_SAY)
     }
     
     
