@@ -9,8 +9,13 @@ job("Dsl_job") {
     concurrentBuild()               // Allows Jenkins to schedule and execute multiple builds concurrently.
     displayName('DSL_JOB')          // Sets the name to display instead of the actual name. 
     label('built-in')                    // Label which specifies which nodes this job can run on. 
+    environmentVariables {
+        env('ONE', '1')
+        env('TWO', '2')
+    }
     steps {
         shell("echo Testing dsl job")
+        sh "printenv"
     }
     
     
