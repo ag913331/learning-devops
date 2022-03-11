@@ -1,3 +1,5 @@
+def file = readFileFromWorkspace('config.json')
+
 job("Dsl_job") {
     // authenticationToken('secret')
     authorization {                 // Creates permission records. 
@@ -15,7 +17,8 @@ job("Dsl_job") {
     }
     steps {
         shell("echo Testing dsl job")
-        shell("printenv")
+        // shell("printenv")
+        shell("echo $ONE")
     }
     
     
