@@ -1,5 +1,7 @@
 pipelineJob("anotherJob") {
-    def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
+    def say():
+        return 'hi'
+
     displayName("Yet Another Job")
     description("Testing another job")
     
@@ -55,6 +57,7 @@ pipelineJob("anotherJob") {
                         stage('Another Greeting') {
                             steps {
                                 echo "Hello!! ${name}"
+                                say()
                             }
                         }
 
