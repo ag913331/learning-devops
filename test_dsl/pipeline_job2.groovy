@@ -46,7 +46,7 @@ pipelineJob("anotherJob") {
     }
 
     definition {
-        cps {
+        cpsFlowDefinition {
             script('''
                 def say() {
                     return 'hi'
@@ -58,7 +58,7 @@ pipelineJob("anotherJob") {
                             steps {
                                 script {
                                     echo "Hello!! ${name}"
-                                    say()
+                                    echo say()
                                 }
                             }
                         }
