@@ -67,7 +67,8 @@ pipelineJob("anotherJob") {
 
                         stage('Show variables') {
                             steps {
-                                sh 'printenv'
+                                // sh 'printenv'
+                                sh $GIT_VERSION
                             }
                         }
                     }
