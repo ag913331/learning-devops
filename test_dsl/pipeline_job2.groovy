@@ -56,8 +56,10 @@ pipelineJob("anotherJob") {
                     stages {
                         stage('Another Greeting') {
                             steps {
-                                echo "Hello!! ${name}"
-                                say()
+                                script {
+                                    echo "Hello!! ${name}"
+                                    say()
+                                }
                             }
                         }
 
