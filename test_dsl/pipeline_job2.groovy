@@ -42,29 +42,7 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            script('''
-                pipeline {
-                    agent any                    
-                    stages {
-                        stage('Another Greeting') {
-                            steps {
-                                echo "Hello!! ${name}"
-                            }
-                        }
-
-                        stage('Who is this?') {
-                            steps {
-                                echo "${env.nickname} - ${env.age}"
-                            }
-                        }
-                    }
-                    post {
-                        success {
-                            writeFile file: 'status.txt', text: 'status: SUCCESS, timestamp...'
-                        }
-                    }
-                }'''.stripIndent()
-            )
+            scriptFile('test_dsl/pipeline_script.groovy')
          }
      }
 }

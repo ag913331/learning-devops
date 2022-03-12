@@ -1,4 +1,4 @@
-job('maya_build_dsl') {
+pipelineJob('maya_build_dsl') {
     description("Testing maya_build via dsl")
     wrappers {
         configFiles {

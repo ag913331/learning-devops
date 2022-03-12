@@ -1,21 +1,28 @@
-APP_SAY = '''#!/bin/sh
-echo Hello Jenkins'''
+// APP_SAY = '''#!/bin/sh
+// echo Hello Jenkins'''
 
 job("Dsl_job") {
-    // authenticationToken('secret')
-    authorization {                 // Creates permission records. 
-        permissionAll('r3d')
+    description("Testing dsl")
+
+    wrappers {
+        configFiles {
+            file('CONFIG_PATH') {
+                variable('CONFIG_PATH')
+                targetLocation('config.json')
+            }
+        }
     }
-    // blockOn('testSeed')             // Block build if certain jobs are running. 
-    checkoutRetryCount(3)           // Sets the number of times the SCM checkout is retried on errors. 
-    // compressBuildLog()              // Compresses the log file after build completion. 
-    concurrentBuild()               // Allows Jenkins to schedule and execute multiple builds concurrently.
-    displayName('DSL_JOB')          // Sets the name to display instead of the actual name. 
-    label('built-in')                    // Label which specifies which nodes this job can run on. 
-    environmentVariables {
-        env('ONE', '1')
-        env('TWO', '2')
+
+    parameters {
+        globalVariableParam('GIT_VERSION', null, 'git version')
+        globalVariableParam('EXE_DIR', null, null)
+        globalVariableParam('DEBINFO_DIR', null, null)
+        globalVariableParam('DUPLICATE_BUILD', null, null)
+        globalVariableParam('SHOULD_BUILD', null, null)
+        globalVariableParam('phonon', null, null)
+        globalVariableParam('BUILD_TYPES', ['MAYA', 'SIM', 'SIM_DEBUG'], null)
     }
+
     steps {
         shell("echo Testing dsl job")
         // shell("printenv")
