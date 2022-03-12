@@ -1,6 +1,3 @@
-def say() {
-    return 'hi'
-}
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
     description("Testing another job")
@@ -51,6 +48,9 @@ pipelineJob("anotherJob") {
     definition {
         cps {
             script('''
+                def say() {
+                    return 'hi'
+                }
                 pipeline {
                     agent any                    
                     stages {
