@@ -61,6 +61,12 @@ pipelineJob("anotherJob") {
                                 echo "Hello!! ${name}"
                             }
                         }
+
+                        stage {
+                            steps {
+                                echo printenv
+                            }
+                        }
                     }
                     post {
                         success {
