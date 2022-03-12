@@ -22,29 +22,29 @@ pipelineJob("anotherJob") {
         }
         durabilityHint { hint("PERFORMANCE_OPTIMIZED") } // Pipeline speed/durability override
         preserveStashes { buildCount(1) } // Preserve stashes from completed builds
+
+        pipelineTriggers {
+            triggers {
+                upstream { // Build after other projects are built
+                    upstreamProjects("greetingJob")
+                    threshold("SUCCESS")
+                }
+
+                cron("H/15 * * * *") // Build periodically
+
+                gitHubPushTrigger() // GitHub hook trigger for GITScm polling
+
+                pollSCM { // Poll SCM
+                    scmpoll_spec("H/12 * * * *")
+                    ignorePostCommitHooks(true)
+                } 
+            }
+        }
     }
 
     environmentVariables {
         env('nickname', 'Alex')
         env('age', 25)
-    }
-
-    pipelineTriggers {
-        triggers {
-            upstream { // Build after other projects are built
-                upstreamProjects("greetingJob")
-                threshold("SUCCESS")
-            }
-
-            cron("H/15 * * * *") // Build periodically
-
-            gitHubPushTrigger() // GitHub hook trigger for GITScm polling
-
-            pollSCM { // Poll SCM
-                scmpoll_spec("H/12 * * * *")
-                ignorePostCommitHooks(true)
-            } 
-        }
     }
 
     definition {
