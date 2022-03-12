@@ -30,7 +30,7 @@ pipelineJob("anotherJob") {
                     threshold("SUCCESS")
                 }
 
-                cron("H/15 * * * *") // Build periodically
+                cron { spec("H/15 * * * *") } // Build periodically
 
                 gitHubPushTrigger() // GitHub hook trigger for GITScm polling
 
