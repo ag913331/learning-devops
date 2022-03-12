@@ -62,7 +62,7 @@ pipelineJob("anotherJob") {
                             }
                         }
 
-                        stage {
+                        stage('Show variables') {
                             steps {
                                 echo printenv
                             }
