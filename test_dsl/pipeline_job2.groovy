@@ -1,6 +1,5 @@
-def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
-
 pipelineJob("anotherJob") {
+    def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
     displayName("Yet Another Job")
     description("Testing another job")
     
@@ -47,9 +46,6 @@ pipelineJob("anotherJob") {
         } 
     }
 
-    disabled() // Disable this project
-    quietPeriod(5) // Quiet period
-
     definition {
         cps {
             script('''
@@ -64,7 +60,7 @@ pipelineJob("anotherJob") {
 
                         stage('Show variables') {
                             steps {
-                                echo printenv
+                                sh 'printenv'
                             }
                         }
                     }
