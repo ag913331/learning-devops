@@ -1,8 +1,16 @@
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
     description("Testing another job")
+    
     parameters {
         stringParam('name', "Ani", 'name of the person')
+        globalVariableParam('GIT_VERSION', null, 'git version')
+        globalVariableParam('EXE_DIR', null, null)
+        globalVariableParam('DEBINFO_DIR', null, null)
+        globalVariableParam('DUPLICATE_BUILD', null, null)
+        globalVariableParam('SHOULD_BUILD', null, null)
+        globalVariableParam('phonon', null, null)
+        globalVariableParam('BUILD_TYPES', ['MAYA', 'SIM', 'SIM_DEBUG'], null)
     }
     properties {
         buildDiscarder { strategy { logRotator(1, 3, 1, 1) } } // Discard old builds
@@ -42,7 +50,23 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            scriptFile('test_dsl/pipeline_script.groovy')
+            scriptFile('''
+                pipeline {
+                    agent any                    
+                    stages {
+                        stage('Another Greeting') {
+                            steps {
+                                echo "Hello!! ${name}"
+                            }
+                        }
+                    }
+                    post {
+                        success {
+                            writeFile file: 'status.txt', text: 'status: SUCCESS, timestamp...'
+                        }
+                    }
+                }'''
+            )
          }
      }
 }
