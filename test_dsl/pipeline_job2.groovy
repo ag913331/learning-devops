@@ -52,7 +52,7 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            scriptFile('''
+            script('''
                 pipeline {
                     agent any                    
                     stages {
