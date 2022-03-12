@@ -29,24 +29,26 @@ pipelineJob("anotherJob") {
         env('age', 25)
     }
 
-    triggers {
-        upstream { // Build after other projects are built
-            upstreamProjects("greetingJob")
-            threshold("SUCCESS")
+    pipelineTriggers {
+        triggers {
+            upstream { // Build after other projects are built
+                upstreamProjects("greetingJob")
+                threshold("SUCCESS")
+            }
+
+            cron("H/15 * * * *") // Build periodically
+
+            gitHubPushTrigger() // GitHub hook trigger for GITScm polling
+
+            pollSCM { // Poll SCM
+                scmpoll_spec("H/12 * * * *")
+                ignorePostCommitHooks(true)
+            } 
         }
-
-        cron("H/15 * * * *") // Build periodically
-
-        gitHubPushTrigger() // GitHub hook trigger for GITScm polling
-
-        pollSCM { // Poll SCM
-            scmpoll_spec("H/12 * * * *")
-            ignorePostCommitHooks(true)
-        } 
     }
 
     definition {
-        cpsFlowDefinition {
+        cps {
             script('''
                 def say() {
                     return 'hi'
