@@ -1,8 +1,7 @@
+def say() {
+    return 'hi'
+}
 pipelineJob("anotherJob") {
-    def say() {
-        return 'hi'
-    }
-
     displayName("Yet Another Job")
     description("Testing another job")
     
