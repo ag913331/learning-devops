@@ -38,6 +38,7 @@ pipelineJob("anotherJob") {
                     scmpoll_spec("H/12 * * * *")
                     ignorePostCommitHooks(true)
                 } 
+                disabled()
             }
         }
     }
@@ -49,36 +50,7 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            script('''
-                def say() {
-                    return 'hi'
-                }
-                pipeline {
-                    agent any                    
-                    stages {
-                        stage('Another Greeting') {
-                            steps {
-                                script {
-                                    echo "Hello!! ${name}"
-                                    echo say()
-                                }
-                            }
-                        }
-
-                        stage('Show variables') {
-                            steps {
-                                // sh 'printenv'
-                                sh $GIT_VERSION
-                            }
-                        }
-                    }
-                    post {
-                        success {
-                            writeFile file: 'status.txt', text: 'status: SUCCESS, timestamp...'
-                        }
-                    }
-                }'''
-            )
+            script(readFileFromWorkspace('pipeline_script.groovy'))
          }
      }
 }

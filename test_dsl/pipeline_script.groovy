@@ -1,10 +1,28 @@
+def say() {
+    return 'hi'
+}
 pipeline {
     agent any                    
     stages {
-        stage('Greet') {
+        stage('Another Greeting') {
             steps {
-                echo "Hello!! ${name}"
+                script {
+                    echo "Hello!! ${name}"
+                    echo say()
+                }
             }
+        }
+
+        stage('Show variables') {
+            steps {
+                // sh 'printenv'
+                sh 'echo $GIT_VERSION'
+            }
+        }
+    }
+    post {
+        success {
+            writeFile file: 'status.txt', text: 'status: SUCCESS, timestamp...'
         }
     }
 }
