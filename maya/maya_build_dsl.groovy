@@ -1,5 +1,8 @@
 pipelineJob('maya_build_dsl') {
     description("Testing maya_build via dsl")
+    authorization {
+        permissionAll('r3d')
+    }
 
     // parameters {
     //     globalVariableParam('GIT_VERSION', null, 'git version')
