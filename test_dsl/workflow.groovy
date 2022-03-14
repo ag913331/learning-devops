@@ -1,4 +1,4 @@
-Config
+// Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
 def BASE_EXE_DIR = "/media/nas/Exe/maya"
 def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
