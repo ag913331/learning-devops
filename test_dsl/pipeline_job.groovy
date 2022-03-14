@@ -1,5 +1,9 @@
+import groovy.yaml.YamlSlurper
 def config = readFileFromWorkspace('config.yaml')
-println config["files"]
+List example = new YamlSlurper().parseText(config)
+
+println example
+
 pipelineJob("sss") {
     description("Testing")
     parameters {
