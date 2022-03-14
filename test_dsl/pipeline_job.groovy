@@ -1,4 +1,5 @@
 def config = readFileFromWorkspace('config.yaml')
+println config
 pipelineJob("sss") {
     description("Testing")
     parameters {
@@ -13,9 +14,7 @@ pipelineJob("sss") {
                         stages {
                             stage('show config') {
                                 steps {
-                                    script {
-                                        echo "$config"
-                                    }
+                                    echo config
                                 }
                             }
                         }
