@@ -1,4 +1,6 @@
-Config
+import java.text.SimpleDateFormat
+
+// Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
 def BASE_EXE_DIR = "/media/nas/Exe/maya"
 def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
@@ -61,7 +63,9 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
     return stages
 }
 
+
 pipeline {
+    triggers { pollSCM('*/1 * * * *') }
     agent {
         docker { 
             label 'master'
@@ -69,6 +73,9 @@ pipeline {
             args '-e TZ=Asia/Shanghai -v /data/:/data -v /media/:/media --network host'
             reuseNode true
         }
+    }
+    parameters {
+        booleanParam(name: 'FORCE', defaultValue: false, description: 'Force build to overwrite existing files')
     }
     stages {
         stage('Phonon') { steps { script { phonon = load("${PHONON_PATH}/jenkins/phonon.groovy") } } }
@@ -114,11 +121,6 @@ pipeline {
                 writeJSON file: 'changes.json', json: phonon.get_build_changes(currentBuild, upstream: true)
                 parallel build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH)
             }}
-            steps {
-                script {
-                    echo "Build main"
-                }
-            }
         }
     }
     // post {
