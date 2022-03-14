@@ -8,7 +8,7 @@ pipelineJob('maya_build_dsl') {
         durabilityHint { hint("PERFORMANCE_OPTIMIZED") }
     }
     parameters {
-        booleanParam(name: 'FORCE', defaultValue: false, description: 'Force build to overwrite existing files')
+        booleanParam('FORCE', false, 'Force build to overwrite existing files')
     }
     // parameters {
     //     globalVariableParam('GIT_VERSION', null, 'git version')
