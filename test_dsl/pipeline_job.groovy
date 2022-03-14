@@ -2,7 +2,7 @@
 import org.yaml.snakeyaml.Yaml
 
 Yaml parser = new Yaml()
-List example = parser.load(("config.yaml" as File).text)
+List example = parser.load(("../config.yaml" as File).text)
 println example
 
 pipelineJob("sss") {
