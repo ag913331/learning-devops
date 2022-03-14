@@ -6,7 +6,7 @@ pipelineJob("greetingJob") {
 
     definition {
         cps {
-            script {'''
+            script('''
                 pipeline {
                     agent any                    
                     stages {
@@ -19,7 +19,7 @@ pipelineJob("greetingJob") {
                         }
                     }
                 }
-            '''}
+            ''')
          }
      }
 }
