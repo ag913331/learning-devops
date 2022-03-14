@@ -74,7 +74,7 @@ pipeline {
     agent any
     stages {
         // stage('Phonon') { steps { script { phonon = load("${PHONON_PATH}/jenkins/phonon.groovy") } } }
-        stage('Phonon') { steps { script { echo "load Phonon" } } }
+        stage('Phonon') { steps { script { echo "load Phonon ${FORCE}" } } }
         stage('Checkout') {
             // parallel {
             //     stage("white_accounts") { steps { script { phonon.checkout_repo('/data/jenkins_repos/white_accounts', 'white_accounts') } } }
