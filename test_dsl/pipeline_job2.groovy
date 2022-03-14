@@ -3,7 +3,6 @@ pipelineJob("anotherJob") {
     description("Testing another job")
 
     authorization {
-        permission('hudson.model.Item.Workspace:authenticated')
         blocksInheritance()
     }
     
