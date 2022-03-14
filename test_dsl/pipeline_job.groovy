@@ -9,7 +9,6 @@ def example_dict = parser.load(config)
 example_dict["pipelines"].eachWithIndex { p, index -> 
     pipelineJob("${p.name}") {
         description("Testing ${p.name}")
-    }
 
     definition {
         cps {
