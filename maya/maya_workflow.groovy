@@ -130,7 +130,11 @@ pipeline {
             //     writeJSON file: 'changes.json', json: phonon.get_build_changes(currentBuild, upstream: true)
             //     parallel build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH)
             // }}
-            echo "Build main"
+            steps {
+                script {
+                    echo "Build main"
+                }
+            }
         }
     }
     // post {
