@@ -1,8 +1,7 @@
 pipelineJob('maya_build_dsl') {
-    // authorization {
-    //     permission('hudson.model.Item.Workspace:authenticated')
-    //     blocksInheritance()
-    // }
+    authorization {
+        blocksInheritance()
+    }
     properties {
         disableConcurrentBuilds()
         durabilityHint { hint("PERFORMANCE_OPTIMIZED") }
