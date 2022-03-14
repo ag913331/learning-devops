@@ -8,7 +8,7 @@ pipelineJob("sss") {
     definition {
         cps {
             script(
-                echo "${config}"
+                echo config
             )
         }
 }
