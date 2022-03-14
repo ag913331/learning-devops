@@ -1,8 +1,8 @@
-import groovy.yaml.YamlSlurper
-def config = readFileFromWorkspace('config.yaml')
-List example = new YamlSlurper().parseText(config)
-
-println example
+// import groovy.yaml.YamlSlurper
+// def config = readFileFromWorkspace('config.yaml')
+// List example = new YamlSlurper().parseText(config)
+def config = readYaml file: 'config.yaml'
+println config
 
 pipelineJob("sss") {
     description("Testing")
