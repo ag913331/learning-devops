@@ -1,9 +1,11 @@
-import groovy.yaml.YamlSlurper
+@Grab('org.yaml:snakeyaml:1.17')
+import org.yaml.snakeyaml.Yaml
 
 def config = readFileFromWorkspace('config.yaml')
 
-def config_dict = new YamlSlurper().parseText(config)
-println config_dict
+Yaml parser = new Yaml()
+List example = parser.load((config as File).text)
+println example
 
 pipelineJob("sss") {
     description("Testing")
