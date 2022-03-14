@@ -72,9 +72,6 @@ pipeline {
     //     }
     // }
     agent any
-    parameters {
-        booleanParam(name: 'FORCE', defaultValue: false, description: 'Force build to overwrite existing files')
-    }
     stages {
         // stage('Phonon') { steps { script { phonon = load("${PHONON_PATH}/jenkins/phonon.groovy") } } }
         stage('Phonon') { steps { script { echo "load Phonon" } } }

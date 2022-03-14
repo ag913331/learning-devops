@@ -1,10 +1,13 @@
 pipelineJob('maya_build_dsl') {
-    description("Testing maya_build via dsl")
-    authorization {
-        permission('hudson.model.Item.Workspace:authenticated')
-        blocksInheritance()
+    // authorization {
+    //     permission('hudson.model.Item.Workspace:authenticated')
+    //     blocksInheritance()
+    // }
+    disableConcurrentBuilds()
+    durabilityHint { hint("PERFORMANCE_OPTIMIZED") }
+    parameters {
+        booleanParam(name: 'FORCE', defaultValue: false, description: 'Force build to overwrite existing files')
     }
-
     // parameters {
     //     globalVariableParam('GIT_VERSION', null, 'git version')
     //     globalVariableParam('EXE_DIR', null, null)
