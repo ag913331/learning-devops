@@ -50,7 +50,7 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            script(readFileFromWorkspace('pipeline_script.groovy'))
+            script(readFileFromWorkspace('test_dsl/pipeline_script.groovy'))
          }
      }
 }
