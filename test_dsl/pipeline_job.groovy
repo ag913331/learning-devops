@@ -4,13 +4,11 @@ import org.yaml.snakeyaml.Yaml
 def config = readFileFromWorkspace('config.yaml')
 
 Yaml parser = new Yaml()
-def example = parser.load(config)
-println example["files"]
+def example_dict = parser.load(config)
 
-pipelineJob("sss") {
-    description("Testing")
-    parameters {
-        stringParam('name', "Tom", 'name of the person')
+example_dict["pipelines"].eachWithIndex { p, index -> 
+    pipelineJob("${p.name}") {
+        description("Testing ${p.name}")
     }
 
     definition {
@@ -21,7 +19,7 @@ pipelineJob("sss") {
                         stages {
                             stage('show config') {
                                 steps {
-                                    echo "config"
+                                    echo "test loop"
                                 }
                             }
                         }
