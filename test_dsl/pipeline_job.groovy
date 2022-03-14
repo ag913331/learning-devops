@@ -7,8 +7,20 @@ pipelineJob("sss") {
 
     definition {
         cps {
-            script(
-                echo "config"
+            script('''
+                    pipeline {
+                        agent any                    
+                        stages {
+                            stage('show config') {
+                                steps {
+                                    script {
+                                        echo "$config"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                '''
             )
         }
 }
