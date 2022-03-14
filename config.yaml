@@ -1,12 +1,5 @@
-server: /home/r3d/work/zh_22_server_1
-files:
+pipelines:
   - 
-    source_path: /stock-day-188056/orderLog.csv
-    dest_path: /home/r3d/celery-project/media/logs/stock-day-188056
-    size: 27
-    sha1sum: a07492ed952e7bce69382e5751e154c0f70fd29
+    name: Pipeline_1
   - 
-    source_path: /stock-day-188056/flags.csv
-    dest_path: /home/r3d/celery-project/media/logs/stock-day-188056
-    size: 27
-    sha1sum: a07492ed952e7bce69382e5751e154c0f70fd299
+    name: Pipeline_2
