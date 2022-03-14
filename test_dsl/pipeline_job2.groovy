@@ -1,6 +1,11 @@
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
     description("Testing another job")
+
+    authorization {
+        permission('hudson.model.Item.Workspace:authenticated')
+        blocksInheritance()
+    }
     
     parameters {
         booleanParam('FORCE', false, 'Force build to overwrite existing files')
