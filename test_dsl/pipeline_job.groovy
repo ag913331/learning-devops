@@ -5,7 +5,7 @@ def config = readFileFromWorkspace('config.yaml')
 
 Yaml parser = new Yaml()
 def example = parser.load(config)
-println example
+println example["files"]
 
 pipelineJob("sss") {
     description("Testing")
