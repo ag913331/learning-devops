@@ -1,5 +1,5 @@
 def config = readFileFromWorkspace('config.yaml')
-println config
+println config["files"]
 pipelineJob("sss") {
     description("Testing")
     parameters {
