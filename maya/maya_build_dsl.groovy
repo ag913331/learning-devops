@@ -1,7 +1,8 @@
 pipelineJob('maya_build_dsl') {
     description("Testing maya_build via dsl")
     authorization {
-        permissionAll('r3d')
+        permission('hudson.model.Item.Workspace:authenticated')
+        blocksInheritance()
     }
 
     // parameters {
