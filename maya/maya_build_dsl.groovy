@@ -14,7 +14,7 @@ pipelineJob('maya_build_dsl') {
 
     definition {
         cps {
-            script(readFileFromWorkspace('maya/maya_workflow.grovy'))
+            script(readFileFromWorkspace('maya/maya_workflow.groovy'))
          }
      }
 }
