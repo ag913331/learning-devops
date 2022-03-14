@@ -96,7 +96,7 @@ pipeline {
             // }
             parallel {
                 stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
-                stage("white_main") { steps { script { echo "checkout white_main") } } }
+                stage("white_main") { steps { script { echo "checkout white_main" } } }
                 stage("white_core") { steps { script { echo "checkout white_core" } } }
                 stage("white_core_shared") { steps { script { echo "checkout white_core_shared" } } }
                 stage("white_monitor") { steps { script { echo "checkout white_monitor" } } }
