@@ -4,7 +4,7 @@ import org.yaml.snakeyaml.Yaml
 def config = readFileFromWorkspace('config.yaml')
 
 Yaml parser = new Yaml()
-def example = parser.load((config).text)
+def example = parser.load(config)
 println example
 
 pipelineJob("sss") {
