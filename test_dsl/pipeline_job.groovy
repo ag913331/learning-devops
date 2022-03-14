@@ -10,21 +10,22 @@ example_dict["pipelines"].eachWithIndex { p, index ->
     pipelineJob("${p.name}") {
         description("Testing ${p.name}")
 
-    definition {
-        cps {
-            script('''
-                    pipeline {
-                        agent any                    
-                        stages {
-                            stage('show config') {
-                                steps {
-                                    echo "test loop"
+        definition {
+            cps {
+                script('''
+                        pipeline {
+                            agent any                    
+                            stages {
+                                stage('show config') {
+                                    steps {
+                                        echo "test loop"
+                                    }
                                 }
                             }
                         }
-                    }
-                '''
-            )
+                    '''
+                )
+            }
         }
     }
 }
