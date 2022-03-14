@@ -3,8 +3,10 @@ pipelineJob('maya_build_dsl') {
     //     permission('hudson.model.Item.Workspace:authenticated')
     //     blocksInheritance()
     // }
-    disableConcurrentBuilds()
-    durabilityHint { hint("PERFORMANCE_OPTIMIZED") }
+    properties {
+        disableConcurrentBuilds()
+        durabilityHint { hint("PERFORMANCE_OPTIMIZED") }
+    }
     parameters {
         booleanParam(name: 'FORCE', defaultValue: false, description: 'Force build to overwrite existing files')
     }
