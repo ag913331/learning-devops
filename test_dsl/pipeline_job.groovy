@@ -23,4 +23,5 @@ pipelineJob("sss") {
                 '''
             )
         }
+    }
 }
