@@ -3,9 +3,9 @@ import org.yaml.snakeyaml.Yaml
 
 def config = readFileFromWorkspace('config.yaml')
 
-// Yaml parser = new Yaml()
-// List example = parser.load((config as File).text)
-println config
+Yaml parser = new Yaml()
+def example = parser.load((config).text)
+println example
 
 pipelineJob("sss") {
     description("Testing")
