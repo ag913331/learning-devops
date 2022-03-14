@@ -1,3 +1,29 @@
+pipelineJob("greetingJob") {
+    description("Testing")
+    parameters {
+        stringParam('name', "Tom", 'name of the person')
+    }
+
+    definition {
+        cps {
+            script {'''
+                pipeline {
+                    agent any                    
+                    stages {
+                        stage('Another Greeting') {
+                            steps {
+                                script {
+                                    echo "Hello!! ${name}"
+                                }
+                            }
+                        }
+                    }
+                }
+            '''}
+         }
+     }
+}
+
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
     description("Testing another job")
@@ -51,7 +77,6 @@ pipelineJob("anotherJob") {
     definition {
         cps {
             script(readFileFromWorkspace('test_dsl/workflow.groovy'))
-            script(readFileFromWorkspace('test_dsl/workflow2.groovy'))
         }
      }
 }
