@@ -22,4 +22,13 @@ pipelineJob("anotherJob") {
             sandbox()
         }
     }
+
+    environmentVariables {
+        env('GIT_VERSION', null)
+        env('EXE_DIR', null)
+        env('DEBINFO_DIR', null)
+        env('DUPLICATE_BUILD', false)
+        env('SHOULD_BUILD', true)
+        env('phonon', null)
+    }
 }
