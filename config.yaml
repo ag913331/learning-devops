@@ -1,5 +1,11 @@
 pipelines:
-  - 
-    name: Pipeline_1
-  - 
-    name: Pipeline_2
+ - 
+  name: Pipeline_1
+  description: Testing variables
+  parameters:
+   -
+    p_type: boolean
+    p_name: FORCE
+    p_default: false
+    p_description: Force build to overwrite existing files
+  workflow: test_dsl/workflow.groovy
