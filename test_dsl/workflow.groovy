@@ -111,7 +111,9 @@ pipeline {
             //     stage("white_main") { steps { script { echo "checkout white_main" } } }
             //     stage("white_core") { steps { script { echo "checkout white_core" } } }
             // }
-            checkout(repos_dict)
+            steps {
+                checkout(repos_dict)
+            }
         }
         stage('Version') {
             steps { script {
