@@ -1,0 +1,7 @@
+repositories:
+ -
+  path: /data/jenkins_repos/white_accounts
+  branch: white_accounts
+ -
+  path: /data/jenkins_repos/white_main
+  branch: white_main
