@@ -13,7 +13,7 @@ example_dict["pipelines"].each { p ->
         description("${p.description}")
 
         parameters {
-            "${p.parameters}".each { param -> 
+            $p.parameters.each { param -> 
                 println "$param"
                 // switch("${$param.p_type}") {
                 //     case "boolean":
