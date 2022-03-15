@@ -7,7 +7,7 @@ Yaml parser = new Yaml()
 def example_dict = parser.load(config)
 
 example_dict["pipelines"].each { p -> 
-    $p.parameters.each { param -> 
+    ${p.parameters}.each { param -> 
         println "$param"
         // switch("${$param.p_type}") {
         //     case "boolean":
