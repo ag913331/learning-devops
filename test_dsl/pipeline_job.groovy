@@ -25,7 +25,7 @@ example_dict["pipelines"].each { p ->
 
         definition {
             cps {
-                script(readFileFromWorkspace(${p["workflow"]}))
+                script(readFileFromWorkspace("${p.workflow}"))
             }
         }
     }
