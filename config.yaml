@@ -9,3 +9,13 @@ pipelines:
     p_default: false
     p_description: Force build to overwrite existing files
   workflow: test_dsl/workflow.groovy
+ -
+  name: Pipeline_2
+  description: Testing multiple pipelines
+  parameters:
+   -
+    p_type: boolean
+    p_name: FORCE2
+    p_default: true
+    p_description: Force build to overwrite existing files
+  workflow: test_dsl/workflow2.groovy
