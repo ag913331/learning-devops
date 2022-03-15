@@ -19,7 +19,7 @@ pipelineJob("anotherJob") {
     definition {
         cps {
             script(readFileFromWorkspace('test_dsl/workflow.groovy'))
-            sandbox()
+            // sandbox()
         }
     }
 
