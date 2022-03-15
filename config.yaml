@@ -1,7 +1,7 @@
 pipelines:
  - 
-  name: Pipeline_1
-  description: Testing variables
+  name: maya_build_dsl
+  description: Testing maya build via dsl
   parameters:
    -
     p_type: boolean
@@ -10,8 +10,8 @@ pipelines:
     p_description: Force build to overwrite existing files
   workflow: test_dsl/workflow.groovy
  -
-  name: Pipeline_2
-  description: Testing multiple pipelines
+  name: white_build_dsl
+  description: Testing white build via dsl
   parameters:
    -
     p_type: boolean
