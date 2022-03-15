@@ -1,6 +1,6 @@
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
-    description("Testing another job")
+    description("Testing variables")
 
     authorization {
         blocksInheritance()
