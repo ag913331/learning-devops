@@ -16,7 +16,7 @@ example_dict["pipelines"].each { p ->
             "${p.parameters}".each { param -> 
                 switch($param.p_type) {
                     case "boolean":
-                        booleanParam("${param.p_name}", "${param.p_default}", "${param.p_description}")
+                        booleanParam("$param.p_name", $param.p_default, "$param.p_description")
                     default:
                         break
                 }
