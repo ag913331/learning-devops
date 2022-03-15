@@ -19,7 +19,7 @@ def get_git_version() {
     return "3"
 }
 
-// def build_exe(WHITE_BUILD_TYPE, INSTALL_DIR) {
+def build_exe(WHITE_BUILD_TYPE, INSTALL_DIR) {
 //     def MAYA_SHARED_LIBS = "OFF"
 //     def CMAKE_BUILD_TYPE = "RelWithDebInfo"
 //     if (WHITE_BUILD_TYPE == "SIM") {
@@ -44,7 +44,9 @@ def get_git_version() {
 // make -j 8
 // make install
 // """)
-// }
+    echo "build ${build_type} in ${EXE_DIR}"
+    return sh(script: """ls""")
+}
 
 def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
     stages = [ : ]
@@ -54,8 +56,8 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
             stage("${paddedIndex}") {
                 def EXE_PATH = null
                 stage("Build(${build_type})") {
-                    // build_exe(build_type, EXE_DIR)
-                    echo "build ${build_type} in ${EXE_DIR}"
+                    build_exe(build_type, EXE_DIR)
+                    // echo "build ${build_type} in ${EXE_DIR}"
                 }
             }
         }
