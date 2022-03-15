@@ -44,7 +44,7 @@ def build_exe(WHITE_BUILD_TYPE, INSTALL_DIR) {
 // make -j 8
 // make install
 // """)
-    echo "build ${build_type} in ${EXE_DIR}"
+    echo "build ${WHITE_BUILD_TYPE} in ${INSTALL_DIR}"
     return sh(script: """ls""")
 }
 
