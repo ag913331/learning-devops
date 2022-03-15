@@ -6,13 +6,26 @@ def config = readFileFromWorkspace('config.yaml')
 Yaml parser = new Yaml()
 def example_dict = parser.load(config)
 
-example_dict["pipelines"].eachWithIndex { p, index -> 
+example_dict["pipelines"].each { p -> 
     pipelineJob("${p.name}") {
-        description("Testing ${p.name}")
+        description("${p.description}")
+
+        parameters {
+            p["parameters"].each { param -> 
+                switch(param["type"]) {
+                    case "boolean":
+                        booleanParam(param["p_name"], param["p_default"], param["p_description"])
+                    default:
+                        break
+                }
+            }
+        }
+
+        disabled()
 
         definition {
             cps {
-                script(readFileFromWorkspace(example_dict[p.workflow]))
+                script(readFileFromWorkspace(p["workflow"]))
             }
         }
     }
