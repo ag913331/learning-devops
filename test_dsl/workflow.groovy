@@ -1,3 +1,11 @@
+@Grab('org.yaml:snakeyaml:1.17')
+import org.yaml.snakeyaml.Yaml
+
+def config = readFileFromWorkspace('repos_config.yaml')
+
+Yaml parser = new Yaml()
+def repos_dict = parser.load(config)
+
 // Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
 def BASE_EXE_DIR = "/media/nas/Exe/maya"
@@ -65,6 +73,11 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
     return stages
 }
 
+def checkout(config) {
+    stages = [ : ]
+    println config
+}
+
 pipeline {
     // agent {
     //     docker { 
@@ -93,11 +106,12 @@ pipeline {
             //     stage("maya_sta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_sta_prod', 'maya_sta_prod') } } }
             //     stage("maya_mta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_mta_prod', 'maya_mta_prod') } } }
             // }
-            parallel {
-                stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
-                stage("white_main") { steps { script { echo "checkout white_main" } } }
-                stage("white_core") { steps { script { echo "checkout white_core" } } }
-            }
+            // parallel {
+            //     stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
+            //     stage("white_main") { steps { script { echo "checkout white_main" } } }
+            //     stage("white_core") { steps { script { echo "checkout white_core" } } }
+            // }
+            checkout(repos_dict)
         }
         stage('Version') {
             steps { script {
