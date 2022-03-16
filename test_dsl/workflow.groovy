@@ -112,7 +112,8 @@ pipeline {
             //     stage("white_core") { steps { script { echo "checkout white_core" } } }
             // }
             steps {
-                checkout(repos_dict)
+                // checkout(repos_dict)
+                echo 'Checkout stage step'
             }
         }
         stage('Version') {
