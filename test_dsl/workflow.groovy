@@ -68,8 +68,9 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
 
 def checkout(config) {
     stages = [ : ]
-    config.repositories.each { repo -> 
-        stages[repo.name] = {
+    config.repositories.eachWithIndex { repo, index -> 
+        def paddedIndex = index.toString().padLeft(2, '0')
+        stages[paddedIndex] = {
             stage(repo.name) {
                 steps {
                     echo repo.branch
@@ -108,8 +109,8 @@ pipeline {
             // }
             steps { script {
                 repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
+                parallel checkout(repos_dict)
             }}
-            parallel checkout(repos_dict)
         }
         stage('Version') {
             steps { script {
