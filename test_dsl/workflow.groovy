@@ -11,6 +11,7 @@ def DUPLICATE_BUILD = false
 def SHOULD_BUILD = true
 
 def phonon = null
+def repos_dict = null
 
 def get_git_version() {
 //     return sh (script: """
