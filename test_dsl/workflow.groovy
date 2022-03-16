@@ -1,10 +1,4 @@
-@Grab('org.yaml:snakeyaml:1.17')
-import org.yaml.snakeyaml.Yaml
-
-def config = readFileFromWorkspace('repos_config.yaml')
-
-Yaml parser = new Yaml()
-def repos_dict = parser.load(config)
+def repos_dict = readYaml file: 'repos_config.yaml'
 
 // Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
