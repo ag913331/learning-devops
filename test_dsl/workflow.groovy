@@ -104,11 +104,11 @@ pipeline {
             //     stage("white_main") { steps { script { echo "checkout white_main" } } }
             //     stage("white_core") { steps { script { echo "checkout white_core" } } }
             // }
-            steps {
+            steps { script {
                 echo 'Checkout stage step'
                 repos_dict = readYaml file: 'repos_config.yaml'
                 checkout(repos_dict)
-            }
+            }}
         }
         stage('Version') {
             steps { script {
