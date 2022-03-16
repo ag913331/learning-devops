@@ -72,9 +72,7 @@ def checkout(config) {
         def paddedIndex = index.toString().padLeft(2, '0')
         stages[paddedIndex] = {
             stage("${repo.name}") {
-                steps {
-                    echo repo.branch
-                }
+                echo repo.branch
             }
         }
     }
