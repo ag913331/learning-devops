@@ -68,7 +68,9 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
 
 def checkout(config) {
     stages = [ : ]
-    println config
+    config.repositories.each { repo -> 
+        println repo
+    }
 }
 
 pipeline {
@@ -105,9 +107,8 @@ pipeline {
             //     stage("white_core") { steps { script { echo "checkout white_core" } } }
             // }
             steps { script {
-                echo 'Checkout stage step'
-                repos_dict = readYaml file: 'repos_config.yaml'
-                checkout(repos_dict)
+                repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
+                parallel checkout(repos_dict)
             }}
         }
         stage('Version') {
