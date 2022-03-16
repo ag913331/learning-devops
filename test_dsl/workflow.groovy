@@ -105,7 +105,7 @@ pipeline {
             // }
             steps {
                 echo 'Checkout stage step'
-                def repos_dict = readYaml file: 'repos_config.yaml'
+                repos_dict = readYaml file: 'repos_config.yaml'
                 checkout(repos_dict)
             }
         }
