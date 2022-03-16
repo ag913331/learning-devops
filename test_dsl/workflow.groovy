@@ -101,15 +101,15 @@ pipeline {
             //     stage("maya_sta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_sta_prod', 'maya_sta_prod') } } }
             //     stage("maya_mta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_mta_prod', 'maya_mta_prod') } } }
             // }
-            // parallel {
-            //     stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
-            //     stage("white_main") { steps { script { echo "checkout white_main" } } }
-            //     stage("white_core") { steps { script { echo "checkout white_core" } } }
-            // }
-            steps { script {
-                repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
-                parallel checkout(repos_dict)
-            }}
+            parallel {
+                stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
+                stage("white_main") { steps { script { echo "checkout white_main" } } }
+                stage("white_core") { steps { script { echo "checkout white_core" } } }
+            }
+            // steps { script {
+            //     repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
+            //     parallel checkout(repos_dict)
+            // }}
         }
         stage('Version') {
             steps { script {
