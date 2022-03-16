@@ -1,5 +1,3 @@
-def repos_dict = readYaml file: 'repos_config.yaml'
-
 // Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
 def BASE_EXE_DIR = "/media/nas/Exe/maya"
@@ -106,8 +104,9 @@ pipeline {
             //     stage("white_core") { steps { script { echo "checkout white_core" } } }
             // }
             steps {
-                // checkout(repos_dict)
                 echo 'Checkout stage step'
+                def repos_dict = readYaml file: 'repos_config.yaml'
+                checkout(repos_dict)
             }
         }
         stage('Version') {
