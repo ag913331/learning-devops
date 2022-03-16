@@ -108,8 +108,8 @@ pipeline {
             // }
             steps { script {
                 repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
-                parallel checkout(repos_dict)
             }}
+            parallel checkout(repos_dict)
         }
         stage('Version') {
             steps { script {
