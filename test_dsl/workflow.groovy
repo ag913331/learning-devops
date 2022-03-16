@@ -70,8 +70,10 @@ def checkout(config) {
     stages = [ : ]
     config.repositories.each { repo -> 
         stages[repo.name] = {
-            steps {
-                echo repo.branch
+            stage(repo.name) {
+                steps {
+                    echo repo.branch
+                }
             }
         }
     }
