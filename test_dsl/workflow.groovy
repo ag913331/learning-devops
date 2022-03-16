@@ -69,19 +69,17 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
 def checkout(config) {
     stages = [ : ]
     config.repositories.each { repo -> 
-        println repo
+        stages[repo.name] = {
+            steps {
+                echo repo.branch
+            }
+        }
     }
+
+    return stages
 }
 
 pipeline {
-    // agent {
-    //     docker { 
-    //         label 'master'
-    //         image 'white_jenkins_cam:latest'
-    //         args '-e TZ=Asia/Shanghai -v /data/:/data -v /media/:/media --network host'
-    //         reuseNode true
-    //     }
-    // }
     agent any
     stages {
         stage('Phonon') { steps { script { echo "load Phonon" } } }
@@ -101,15 +99,15 @@ pipeline {
             //     stage("maya_sta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_sta_prod', 'maya_sta_prod') } } }
             //     stage("maya_mta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_mta_prod', 'maya_mta_prod') } } }
             // }
-            parallel {
-                stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
-                stage("white_main") { steps { script { echo "checkout white_main" } } }
-                stage("white_core") { steps { script { echo "checkout white_core" } } }
-            }
-            // steps { script {
-            //     repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
-            //     parallel checkout(repos_dict)
-            // }}
+            // parallel {
+            //     stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
+            //     stage("white_main") { steps { script { echo "checkout white_main" } } }
+            //     stage("white_core") { steps { script { echo "checkout white_core" } } }
+            // }
+            steps { script {
+                repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
+                parallel checkout(repos_dict)
+            }}
         }
         stage('Version') {
             steps { script {
