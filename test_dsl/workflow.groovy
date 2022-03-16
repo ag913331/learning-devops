@@ -71,7 +71,7 @@ def checkout(config) {
     config.repositories.eachWithIndex { repo, index -> 
         def paddedIndex = index.toString().padLeft(2, '0')
         stages[paddedIndex] = {
-            stage("${repo.name}") {
+            stage("${repo.branch}") {
                 echo repo.branch
             }
         }
