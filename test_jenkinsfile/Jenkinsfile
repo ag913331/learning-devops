@@ -1,0 +1,34 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    stages {
+        stage("First stage") {
+            options {
+                timeout(time: 10, unit: "SECONDS")
+            }
+            steps {
+                echo "Doing some work in first stage"
+                sh "ls -l"
+            }
+        }
+
+        stage("List global vars") {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+            }
+        }
+
+        stage("Deploy") {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+
+            steps {
+                echo "Deploy"
+            }
+        }
+    }
+}
