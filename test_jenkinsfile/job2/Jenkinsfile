@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    stages {
+        stage("First stage") {
+            options {
+                timeout(time: 10, unit: "SECONDS")
+            }
+            steps {
+                echo "Doing some work in first stage"
+                sh "ls -l"
+            }
+        }
+
+        stage("List global vars") {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+            }
+        }
+
+        stage("Parallel") {
+            parallel {
+                stage("parallel 1") {
+                    steps { echo "doing something in parallel 1" }
+                }
+                stage("parallel 2") {
+                    steps { echo "doing something in parallel 2" }
+                }
+            }
+        }
+    }
+}
