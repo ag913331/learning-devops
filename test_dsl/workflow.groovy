@@ -83,6 +83,7 @@ def checkout(config) {
 pipeline {
     agent any
     stages {
+        stage('Hello') { steps { sh './test.sh' }}
         stage('Phonon') { steps { script { echo "load Phonon" } } }
         stage('Checkout') {
             // parallel {
@@ -99,11 +100,6 @@ pipeline {
             //     stage("maya_algo") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_algo', 'maya_algo') } } }
             //     stage("maya_sta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_sta_prod', 'maya_sta_prod') } } }
             //     stage("maya_mta_prod") { steps { script { phonon.checkout_repo('/data/jenkins_repos/maya_mta_prod', 'maya_mta_prod') } } }
-            // }
-            // parallel {
-            //     stage("white_accounts") { steps { script { echo "checkout white_accounts" } } }
-            //     stage("white_main") { steps { script { echo "checkout white_main" } } }
-            //     stage("white_core") { steps { script { echo "checkout white_core" } } }
             // }
             steps { script {
                 repos_dict = readYaml file: '/var/jenkins_home/workspace/testSEED/repos_config.yaml'
