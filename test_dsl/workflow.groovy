@@ -83,7 +83,6 @@ def checkout(config) {
 pipeline {
     agent any
     stages {
-        stage('Hello') { steps { sh './test.sh' }}
         stage('Phonon') { steps { script { echo "load Phonon" } } }
         stage('Checkout') {
             // parallel {
