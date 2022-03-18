@@ -1,4 +1,4 @@
-def test = load 'utils/DefUtil.groovy'
+import static utils.DefUtils
 
 def job = pipelineJob('dsl-job-one_withUtils') {
     description("dsl-job-one implementation from code with utils")
@@ -11,4 +11,4 @@ def job = pipelineJob('dsl-job-one_withUtils') {
     }
 }
 
-test.DefUtils.setupDefinition(job, 'jenkins_jobs/jobs/dsl.groovy')
+DefUtils.setupDefinition(job, 'jenkins_jobs/jobs/dsl.groovy')
