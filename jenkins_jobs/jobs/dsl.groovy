@@ -3,18 +3,14 @@ import javaposse.jobdsl.dsl.Job
 class DefUtils {
     static void setupDefinition(Job job, String desc) {
         job.with {
-            definition {
-                cps {
-                    script(readFileFromWorkspace('jenkins_jobs/jobs/dsl.groovy'))
-                    sandbox()
-                }
-            }
+            description(desc)
+            
         }
     }
 }
 
 Job job = pipelineJob('dsl-job-one_withUtils') {
-    description("dsl-job-one implementation from code with utils")
+    // description("dsl-job-one implementation from code with utils")
 
     disabled()
 
@@ -23,7 +19,12 @@ Job job = pipelineJob('dsl-job-one_withUtils') {
     //     env('TWO', '2')
     // }
 
-    
+    definition {
+        cps {
+            script(readFileFromWorkspace('jenkins_jobs/jobs/workflow.groovy'))
+            sandbox()
+        }
+    }
 }
 
-DefUtils.setupDefinition(job, "dsl-job-one implementation from code with utils vv")
+DefUtils.setupDefinition(job, "dsl-job-one implementation from code with utils")
