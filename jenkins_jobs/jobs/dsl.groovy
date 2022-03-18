@@ -1,4 +1,4 @@
-import static utils.DefUtils
+import static util.DefUtils
 
 def job = pipelineJob('dsl-job-one_withUtils') {
     description("dsl-job-one implementation from code with utils")
