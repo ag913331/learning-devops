@@ -1,5 +1,5 @@
 import javaposse.jobdsl.dsl.DslFactory
-import javaposse.jobdsl.dsl.PipelineJob
+import javaposse.jobdsl.dsl.Job
 class DefUtils {
     static void setupDefinition(def job, String desc) {
         job.with {
@@ -9,7 +9,7 @@ class DefUtils {
     }
 }
 
-PipelineJob job = pipelineJob('dsl-job-one_withUtils') {
+Job job = pipelineJob('dsl-job-one_withUtils') {
     // description("dsl-job-one implementation from code with utils")
 
     disabled()
