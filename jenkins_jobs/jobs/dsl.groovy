@@ -3,7 +3,6 @@ import javaposse.jobdsl.dsl.Job
 class DefUtils {
     static void setupDefinition(Job job, String desc) {
         job.with {
-            description(desc)
             definition {
                 cps {
                     script(readFileFromWorkspace('jenkins_jobs/jobs/dsl.groovy'))
@@ -15,7 +14,7 @@ class DefUtils {
 }
 
 Job job = pipelineJob('dsl-job-one_withUtils') {
-    // description("dsl-job-one implementation from code with utils")
+    description("dsl-job-one implementation from code with utils")
 
     disabled()
 
