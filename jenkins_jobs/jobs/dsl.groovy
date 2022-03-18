@@ -19,12 +19,12 @@ Job job = pipelineJob('dsl-job-one_withUtils') {
     //     env('TWO', '2')
     // }
 
-    // definition {
-    //     cps {
-    //         script(readFileFromWorkspace('jenkins_jobs/jobs/dsl.groovy'))
-    //         sandbox()
-    //     }
-    // }
+    definition {
+        cps {
+            script(readFileFromWorkspace('jenkins_jobs/jobs/dsl.groovy'))
+            sandbox()
+        }
+    }
 }
 
 DefUtils.setupDefinition(job, "dsl-job-one implementation from code with utils")
