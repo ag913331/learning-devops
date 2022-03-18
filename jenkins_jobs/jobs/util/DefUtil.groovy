@@ -1,16 +1,14 @@
 package util
 
-// import javaposse.jobdsl.dsl.Job
+import javaposse.jobdsl.dsl.DslFactory
+import javaposse.jobdsl.dsl.Job
 
 class DefUtils {
-    static void setupDefinition(def job, String workflowPath) {
+    static void setupDefinition(Job job, String desc) {
         job.with {
-            definition {
-                cps {
-                    script(readFileFromWorkspace(workflowPath))
-                    sandbox()
-                }
-            }
+            description(desc)
+            disabled()
+            
         }
     }
 }
