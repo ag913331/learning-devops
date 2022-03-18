@@ -11,4 +11,4 @@ def job = pipelineJob('dsl-job-one_withUtils') {
     }
 }
 
-DefUtils.setupDefinition(job, 'jenkins_jobs/src/jobs/pj1/dsl.groovy')
+DefUtils.setupDefinition(job, 'jenkins_jobs/jobs/dsl.groovy')
