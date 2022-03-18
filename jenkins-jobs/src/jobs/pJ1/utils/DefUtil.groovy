@@ -1,9 +1,9 @@
 package utils
 
-import javaposse.jobdsl.dsl.Job
+// import javaposse.jobdsl.dsl.Job
 
 class DefUtils {
-    static void setupDefinition(Job job, String workflowPath) {
+    static void setupDefinition(def job, String workflowPath) {
         job.with {
             definition {
                 cps {

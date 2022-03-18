@@ -1,7 +1,6 @@
-import javaposse.jobdsl.dsl.jobs.PipelineJob
 import utils.DefUtils
 
-PipelineJob job = pipelineJob('dsl-job-one_withUtils') {
+def job = pipelineJob('dsl-job-one_withUtils') {
     description("dsl-job-one implementation from code with utils")
 
     disabled()
