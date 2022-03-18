@@ -1,4 +1,4 @@
-package utils.DefUtils
+package utils
 
 // import javaposse.jobdsl.dsl.Job
 
