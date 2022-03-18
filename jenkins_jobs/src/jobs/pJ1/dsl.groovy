@@ -1,5 +1,4 @@
-package jenkins_jobs.src.jobs.pJ1.utils
-import jenkins_jobs.src.jobs.pJ1.utils.DefUtils
+import utils.DefUtils
 
 def job = pipelineJob('dsl-job-one_withUtils') {
     description("dsl-job-one implementation from code with utils")
