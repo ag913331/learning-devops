@@ -10,6 +10,8 @@ class DefUtils {
                     sandbox()
                 }
             }
+
+            disabled()
         }
     }
 }
@@ -17,7 +19,7 @@ class DefUtils {
 Job job = pipelineJob('dsl-job-one_withUtils') {
     description("dsl-job-one implementation from code with utils")
 
-    disabled()
+    
 
     // environmentVariables {
     //     env('ONE', '1')
