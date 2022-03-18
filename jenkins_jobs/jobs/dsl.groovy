@@ -1,19 +1,15 @@
 // import static jenkins_jobs.jobs.util.DefUtils
 class DefUtils {
-    static void setupDefinition(def job, String workflowPath) {
+    static void setupDefinition(def job, String desc) {
         job.with {
-            definition {
-                cps {
-                    script(readFileFromWorkspace(workflowPath))
-                    sandbox()
-                }
-            }
+            description(desc)
+            
         }
     }
 }
 
 def job = pipelineJob('dsl-job-one_withUtils') {
-    description("dsl-job-one implementation from code with utils")
+    // description("dsl-job-one implementation from code with utils")
 
     disabled()
 
@@ -21,6 +17,13 @@ def job = pipelineJob('dsl-job-one_withUtils') {
         env('ONE', '1')
         env('TWO', '2')
     }
+
+    definition {
+        cps {
+            script(readFileFromWorkspace('jenkins_jobs/jobs/dsl.groovy'))
+            sandbox()
+        }
+    }
 }
 
-DefUtils.setupDefinition(job, 'jenkins_jobs/jobs/dsl.groovy')
+DefUtils.setupDefinition(job, "dsl-job-one implementation from code with utils")
