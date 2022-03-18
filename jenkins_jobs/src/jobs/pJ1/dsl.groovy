@@ -1,3 +1,4 @@
+package jenkins_jobs.src.jobs.pJ1.utils
 import jenkins_jobs.src.jobs.pJ1.utils.DefUtils
 
 def job = pipelineJob('dsl-job-one_withUtils') {
