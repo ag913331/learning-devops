@@ -1,4 +1,4 @@
-// import static jenkins_jobs.jobs.util.DefUtils
+import javaposse.jobdsl.dsl.PipelineJob
 class DefUtils {
     static void setupDefinition(def job, String desc) {
         job.with {
@@ -8,7 +8,7 @@ class DefUtils {
     }
 }
 
-def job = pipelineJob('dsl-job-one_withUtils') {
+PipelineJob job = pipelineJob('dsl-job-one_withUtils') {
     // description("dsl-job-one implementation from code with utils")
 
     disabled()
