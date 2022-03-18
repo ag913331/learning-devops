@@ -1,4 +1,16 @@
-import static jenkins_jobs.jobs.util.DefUtils
+// import static jenkins_jobs.jobs.util.DefUtils
+class DefUtils {
+    static void setupDefinition(def job, String workflowPath) {
+        job.with {
+            definition {
+                cps {
+                    script(readFileFromWorkspace(workflowPath))
+                    sandbox()
+                }
+            }
+        }
+    }
+}
 
 def job = pipelineJob('dsl-job-one_withUtils') {
     description("dsl-job-one implementation from code with utils")
