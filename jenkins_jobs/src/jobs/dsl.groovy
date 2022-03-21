@@ -20,7 +20,7 @@ Job job = pipelineJob('dsl-job-one_withUtils') {
 
     definition {
         cps {
-            script(readFileFromWorkspace('jenkins_jobs/jobs/workflow.groovy'))
+            script(readFileFromWorkspace('jenkins_jobs/src/jobs/workflow.groovy'))
             sandbox()
         }
     }
