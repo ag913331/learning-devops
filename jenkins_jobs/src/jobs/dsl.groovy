@@ -1,7 +1,7 @@
 import javaposse.jobdsl.dsl.DslFactory
 import javaposse.jobdsl.dsl.Job
 
-import util.DefUtils
+import jenkins_jobs.src.jobs.util.DefUtils
 // class DefUtils {
 //     static void setupDefinition(Job job, String desc) {
 //         job.with {
