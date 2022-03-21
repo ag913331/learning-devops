@@ -1,7 +1,11 @@
 import javaposse.jobdsl.dsl.DslFactory
 import javaposse.jobdsl.dsl.Job
 
-import util.DefUtils
+try{
+    import util.DefUtils
+}catch(Throwable t){
+    return [t.toString()]
+}
 // class DefUtils {
 //     static void setupDefinition(Job job, String desc) {
 //         job.with {
