@@ -1,16 +1,16 @@
 import javaposse.jobdsl.dsl.DslFactory
 import javaposse.jobdsl.dsl.Job
 
-// import util.DefUtils
-class DefUtils {
-    static void setupDefinition(Job job, String desc) {
-        job.with {
-            description(desc)
-            disabled()
+import util.DefUtils
+// class DefUtils {
+//     static void setupDefinition(Job job, String desc) {
+//         job.with {
+//             description(desc)
+//             disabled()
             
-        }
-    }
-}
+//         }
+//     }
+// }
 
 Job job = pipelineJob('dsl-job-one_withUtils') {
     // environmentVariables {
