@@ -18,6 +18,11 @@ pipelineJob("anotherJob") {
     }
     disabled()
 
+    throttleConcurrentBuilds {
+        maxPerNode(0)
+        maxTotal(1)
+    }
+
     definition {
         cps {
             script(readFileFromWorkspace("${WORKSPACE_PATH}/test_dsl/workflow.groovy"))
