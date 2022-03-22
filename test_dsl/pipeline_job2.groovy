@@ -1,6 +1,8 @@
+def WOKFLOW_PATH = 'test_dsl/workflow.groovy'
+
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
-    description("Testing variables")
+    description("Testing variables and wokflow path")
 
     authorization {
         blocksInheritance()
@@ -18,7 +20,7 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            script(readFileFromWorkspace('test_dsl/workflow.groovy'))
+            script(readFileFromWorkspace(WOKFLOW_PATH))
             sandbox()
         }
     }
