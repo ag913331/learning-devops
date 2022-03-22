@@ -1,4 +1,4 @@
-def WOKFLOW_PATH = 'test_dsl/workflow.groovy'
+def WORKSPACE_PATH = '/var/jenkins_home/workspace/testSEED'
 
 pipelineJob("anotherJob") {
     displayName("Yet Another Job")
@@ -20,7 +20,7 @@ pipelineJob("anotherJob") {
 
     definition {
         cps {
-            script(readFileFromWorkspace(WOKFLOW_PATH))
+            script(readFileFromWorkspace("${WORKSPACE_PATH}/test_dsl/workflow.groovy"))
             sandbox()
         }
     }
