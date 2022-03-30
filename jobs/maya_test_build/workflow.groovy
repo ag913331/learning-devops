@@ -72,7 +72,7 @@ def checkout(config, phonon) {
         def paddedIndex = index.toString().padLeft(2, '0')
         stages["${repo.branch}"] = {
             stage("${repo.branch}") {
-                steps { script { phonon.checkout_repo("${repo.path}", "${repo.branch}") } }
+                phonon.checkout_repo("${repo.path}", "${repo.branch}") 
             }
         }
     }
@@ -86,7 +86,9 @@ pipeline {
         stage('Phonon') { steps { script { phonon = load("/var/jenkins_home/workspace/generator/phonon.groovy")} } }
         stage('Config') { steps { script { repos_dict = readYaml file: '/var/jenkins_home/workspace/generator/jobs/maya_test_build/config.yaml' } } }
         stage('Checkout') {
-            parallel checkout(repos_dict, phonon)
+            steps { script {
+                parallel checkout(repos_dict, phonon)
+            }}
         }
         stage('Version') {
             steps { script {
