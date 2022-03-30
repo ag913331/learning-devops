@@ -84,10 +84,8 @@ pipeline {
     agent any
     stages {
         stage('Phonon') { steps { script { phonon = load("/var/jenkins_home/workspace/generator/phonon.groovy")} } }
+        stage('Config') { steps { script { repos_dict = readYaml file: '/var/jenkins_home/workspace/generator/jobs/maya_test_build/config.yaml' } } }
         stage('Checkout') {
-            steps { script {
-                repos_dict = readYaml file: '/var/jenkins_home/workspace/generator/jobs/maya_test_build/config.yaml'
-            }}
             parallel checkout(repos_dict, phonon)
         }
         stage('Version') {
