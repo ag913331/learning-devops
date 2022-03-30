@@ -66,13 +66,13 @@ def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
     return stages
 }
 
-def checkout(config) {
+def checkout(config, phonon) {
     stages = [ : ]
     config.repositories.eachWithIndex { repo, index -> 
         def paddedIndex = index.toString().padLeft(2, '0')
         stages["${repo.branch}"] = {
             stage("${repo.branch}") {
-                echo repo.branch
+                steps { script { phonon.checkout_repo("${repo.path}", "${repo.branch}") } }
             }
         }
     }
@@ -87,7 +87,7 @@ pipeline {
         stage('Checkout') {
             steps { script {
                 repos_dict = readYaml file: '/var/jenkins_home/workspace/generator/jobs/maya_test_build/config.yaml'
-                parallel checkout(repos_dict)
+                parallel checkout(repos_dict, phonon)
             }}
         }
         stage('Version') {

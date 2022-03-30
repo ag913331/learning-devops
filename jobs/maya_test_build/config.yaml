@@ -1,7 +1,7 @@
 repositories:
  -
   path: https://github.com/ag913331/learning-devops
-  branch: trash
+  branch: local1
  -
   path: https://github.com/ag913331/learning-devops
-  branch: trash
+  branch: local2
