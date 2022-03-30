@@ -1,22 +1,23 @@
 def checkout_repo(Map args = [:], String repo_url, String local_dir) {
-    def merged_args = [
-        branch: 'master',
-        poll: true
-    ] << args
-    return retry(5) {
-        checkout(scm: [
-            $class: 'GitSCM',
-            branches: [[name: "*/${merged_args.branch}"]],
-            extensions: [
-                [$class: 'RelativeTargetDirectory', relativeTargetDir: local_dir],
-                [$class: 'CloneOption', timeout: 60]
-            ],
-            submoduleCfg: [],
-            // userRemoteConfigs: [[credentialsId: 'veskok', url: repo_url]],
-        ], 
-        poll: merged_args.poll,
-        changelog: merged_args.poll)
-    }
+    // def merged_args = [
+    //     branch: 'master',
+    //     poll: true
+    // ] << args
+    // return retry(5) {
+    //     checkout(scm: [
+    //         $class: 'GitSCM',
+    //         branches: [[name: "*/${merged_args.branch}"]],
+    //         extensions: [
+    //             [$class: 'RelativeTargetDirectory', relativeTargetDir: local_dir],
+    //             [$class: 'CloneOption', timeout: 60]
+    //         ],
+    //         submoduleCfg: [],
+    //         // userRemoteConfigs: [[credentialsId: 'veskok', url: repo_url]],
+    //     ], 
+    //     poll: merged_args.poll,
+    //     changelog: merged_args.poll)
+    // }
+    echo "REPO: ${repo_url} LOCAL_DIR ${local_dir}"
 }
 
 def get_build_changes(Map args = [:], build) {
