@@ -83,7 +83,7 @@ def checkout(config) {
 pipeline {
     agent any
     stages {
-        stage('Phonon') { steps { script { phonon = load("phonon.groovy")} } }
+        stage('Phonon') { steps { script { phonon = load("/var/jenkins_home/workspace/generator/phonon.groovy")} } }
         stage('Checkout') {
             steps { script {
                 repos_dict = readYaml file: 'jobs/maya_test_build/testSEED/repos_config.yaml'
