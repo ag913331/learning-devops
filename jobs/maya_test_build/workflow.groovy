@@ -86,7 +86,7 @@ pipeline {
         stage('Phonon') { steps { script { phonon = load("/var/jenkins_home/workspace/generator/phonon.groovy")} } }
         stage('Checkout') {
             steps { script {
-                repos_dict = readYaml file: 'jobs/maya_test_build/testSEED/repos_config.yaml'
+                repos_dict = readYaml file: '/var/jenkins_home/workspace/generator/jobs/maya_test_build/config.yaml'
                 parallel checkout(repos_dict)
             }}
         }
