@@ -50,6 +50,7 @@ def build_exe(WHITE_BUILD_TYPE, INSTALL_DIR) {
 }
 
 def build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH) {
+    echo "PHONON_PATH: ${PHONON_PATH}"
     stages = [ : ]
     BUILD_TYPES.eachWithIndex { build_type, index ->
         def paddedIndex = index.toString().padLeft(2, '0')
@@ -115,7 +116,7 @@ pipeline {
             when { expression { return SHOULD_BUILD } }
             steps { script {
                 // writeJSON file: 'changes.json', json: phonon.get_build_changes(currentBuild, upstream: true)
-                parallel build_stages(GIT_VERSION, EXE_DIR, repos_dict.build_types, PHONON_PATH)
+                parallel build_stages(GIT_VERSION, EXE_DIR, repos_dict.build_types, repos_dict.phonon_path)
             }}
         }
     }
