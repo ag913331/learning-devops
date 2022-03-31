@@ -6,13 +6,13 @@ pipelineJob("maya_test_build") {
     }
 
     environmentVariables {
-        env('GIT_VERSION': null)
-        env('EXE_DIR': null)
-        env('DEBINFO_DIR': null)
-        env('DUPLICATE_BUILD': false)
-        env('SHOULD_BUILD': true)
-        env('phonon': null)
-        env('repos_dict': null)
+        env('GIT_VERSION', null)
+        env('EXE_DIR', null)
+        env('DEBINFO_DIR', null)
+        env('DUPLICATE_BUILD', false)
+        env('SHOULD_BUILD', true)
+        env('phonon', null)
+        env('repos_dict', null)
     }
 
     definition {
