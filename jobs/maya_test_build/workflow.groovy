@@ -1,17 +1,17 @@
 // Config
-def PHONON_PATH = '/data/jenkins_repos/phonon'
+// def PHONON_PATH = '/data/jenkins_repos/phonon'
 // def BASE_EXE_DIR = "/media/nas/Exe/maya"
 // def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
 
 // Global variables set during build
-def GIT_VERSION = null
-def EXE_DIR = null
-def DEBINFO_DIR = null
-def DUPLICATE_BUILD = false
-def SHOULD_BUILD = true
+// def GIT_VERSION = null
+// def EXE_DIR = null
+// def DEBINFO_DIR = null
+// def DUPLICATE_BUILD = false
+// def SHOULD_BUILD = true
 
-def phonon = null
-def repos_dict = null
+// def phonon = null
+// def repos_dict = null
 
 def get_git_version() {
 //     return sh (script: """

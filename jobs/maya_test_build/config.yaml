@@ -7,3 +7,4 @@ repositories:
   branch: local2
 build_types: ['MAYA', 'SIM', 'SIM_DEBUG', 'TEST']
 base_exe_dir: /media/nas/Exe/maya
+phonon_path: /data/jenkins_repos/phonon
