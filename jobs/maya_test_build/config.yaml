@@ -5,3 +5,4 @@ repositories:
  -
   path: https://github.com/ag913331/learning-devops
   branch: local2
+build_types: ['MAYA', 'SIM', 'SIM_DEBUG', 'TEST']

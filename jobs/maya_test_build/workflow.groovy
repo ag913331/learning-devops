@@ -1,7 +1,7 @@
 // Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
 def BASE_EXE_DIR = "/media/nas/Exe/maya"
-def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
+// def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
 
 // Global variables set during build
 def GIT_VERSION = null
@@ -115,7 +115,7 @@ pipeline {
             when { expression { return SHOULD_BUILD } }
             steps { script {
                 // writeJSON file: 'changes.json', json: phonon.get_build_changes(currentBuild, upstream: true)
-                parallel build_stages(GIT_VERSION, EXE_DIR, BUILD_TYPES, PHONON_PATH)
+                parallel build_stages(GIT_VERSION, EXE_DIR, repos_dict.build_types, PHONON_PATH)
             }}
         }
     }
