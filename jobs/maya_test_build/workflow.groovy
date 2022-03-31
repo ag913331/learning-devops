@@ -1,6 +1,6 @@
 // Config
 def PHONON_PATH = '/data/jenkins_repos/phonon'
-def BASE_EXE_DIR = "/media/nas/Exe/maya"
+// def BASE_EXE_DIR = "/media/nas/Exe/maya"
 // def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
 
 // Global variables set during build
@@ -95,7 +95,7 @@ pipeline {
         stage('Version') {
             steps { script {
                 GIT_VERSION = get_git_version().trim()
-                EXE_DIR = "${BASE_EXE_DIR}/${GIT_VERSION}"
+                EXE_DIR = "${repos_dict.base_exe_dir}/${GIT_VERSION}"
                 echo "GIT_VERSION: ${GIT_VERSION}"
                 currentBuild.displayName = "${GIT_VERSION}"
             }}
