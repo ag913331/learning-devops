@@ -1,9 +1,9 @@
 pipelineJob("maya_test_build") {
     description("Build automation")
 
-    // parameters {
-    //     booleanParam('LOAD_CONFIG', false, 'Load predefined workflow config')
-    // }
+    parameters {
+        booleanParam('FORCE', false, 'Force build to overwrite existing files')
+    }
 
     definition {
         cps {
