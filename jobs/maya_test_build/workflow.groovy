@@ -1,17 +1,4 @@
-// Config
-// def PHONON_PATH = '/data/jenkins_repos/phonon'
-// def BASE_EXE_DIR = "/media/nas/Exe/maya"
-// def BUILD_TYPES = ['MAYA', 'SIM', 'SIM_DEBUG']
-
-// Global variables set during build
-// def GIT_VERSION = null
-// def EXE_DIR = null
-// def DEBINFO_DIR = null
-// def DUPLICATE_BUILD = false
-// def SHOULD_BUILD = true
-
-// def phonon = null
-// def repos_dict = null
+def SEED_PATH = "/var/jenkins_home/workspace/generator"
 
 def get_git_version() {
 //     return sh (script: """
@@ -84,9 +71,9 @@ def checkout(config, phonon) {
 pipeline {
     agent any
     stages {
-        stage('Phonon') { steps { script { phonon = load("/var/jenkins_home/workspace/generator/phonon.groovy")} } }
+        stage('Phonon') { steps { script { phonon = load("${SEED_PATH}/phonon.groovy")} } }
         stage('Config') {
-            steps { script { repos_dict = readYaml file: '/var/jenkins_home/workspace/generator/jobs/maya_test_build/config.yaml' } } 
+            steps { script { repos_dict = readYaml file: "${SEED_PATH}/jobs/maya_test_build/config.yaml" } } 
         }
         stage('Checkout') {
             steps { script {
@@ -97,6 +84,7 @@ pipeline {
             steps { script {
                 GIT_VERSION = get_git_version().trim()
                 EXE_DIR = "${repos_dict.base_exe_dir}/${GIT_VERSION}"
+                echo "EXE_DIR: ${EXE_DIR}"
                 echo "GIT_VERSION: ${GIT_VERSION}"
                 currentBuild.displayName = "${GIT_VERSION}"
             }}
@@ -116,7 +104,7 @@ pipeline {
             when { expression { return SHOULD_BUILD } }
             steps { script {
                 // writeJSON file: 'changes.json', json: phonon.get_build_changes(currentBuild, upstream: true)
-                parallel build_stages(GIT_VERSION, EXE_DIR, repos_dict.build_types, repos_dict.phonon_path)
+                parallel build_stages(GIT_VERSION, EXE_DIR, repos_dict.build_types, SEED_PATH)
             }}
         }
     }
